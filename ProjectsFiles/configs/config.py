@@ -3,10 +3,16 @@
 
 # Список разрешений для бота
 class Permissions:
-    bot_edit = False
-    logging = True
-    logging_to_file = False
-    msg_logging = False
+    bot_edit = False    # Изменение имени, описания и виджета (True)
+    delete_webhook = True   # Удаление веб-хука (True)
+
+    logging = True  # Вывод логов в консоль (True)
+    logging_to_file = False     # Вывод логов в файл (True)
+    msg_logging = False     # Логирование сообщений (В разработке)
+
+    start_info_console = True   # Вывод информации о боте в начале (True)
+
+    sql_user = True     # Регистрирование в базу данных (True)
 
 
 # Имя, описание и виджет бота(при наличии баннера виджета)
@@ -15,14 +21,36 @@ class BotEdit:
     permission = Permissions.bot_edit
     name = "Стартовый бот"
     description = "Описание бота"
-    widget_description = "Описание виджета"
+    short_description = "Описание виджета"
+
+    is_anonymous=False
+    manage_chat=True
+    delete_messages=True
+    manage_video_chats=True
+    restrict_members=True
+    promote_members=True
+    change_info=True
+    invite_users=True
+    post_stories=True
+    edit_stories=True
+    delete_stories=True
+    post_messages=True
+    edit_messages=True
+    pin_messages=True
+    manage_topics=True
+
+
+# Хранение параметров проекта
+class BotVar:
+    encod = "utf-8"
+    language = "Python3-Aiogram"
+    time_format = "%Y-%m-%d %H:%M:%S"
+    prefix = ('$', '!', '.', '%', '&', ':', '|', '+', '-', '/', '~', '?')
 
 
 # Класс создания директорий проекта
 class ProjectPath:
     BotLogs = "BotLogs"
-
-
 
 
 # Настройки логирования бота
@@ -62,11 +90,3 @@ class BotLogs:
         "<bold>ERROR-{extra[log_type]}</bold> | "
         "{extra[user]} | {message}</level>"
     )
-
-
-# Хранение параметров проекта
-class BotVar:
-    encod = "utf-8"
-    language = "Python3-Aiogram"
-    time_format = "%Y-%m-%d %H:%M:%S"
-    prefix = ('$', '!', '.', '%', '&', ':', '|', '+', '-', '/', '~', '?')

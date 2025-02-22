@@ -1,27 +1,29 @@
-# BotLibrary/library/bots.py
+# BotLibrary/system/bots.py
 # Создание и настройка бота в одном файле
 
 from aiogram import Dispatcher, Bot, F
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
-from aiogram.utils.keyboard import InlineKeyboardBuilder
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
+
+from ..timer import *
 from ProjectsFiles import *
 
 # Создание экземпляра диспатчера, строителей кнопок
 dp = Dispatcher()
+rkb = ReplyKeyboardBuilder()
 ikb = InlineKeyboardBuilder()
 
 
 # Настройка параметров диспатчера
-dp["started_at"] = None
-dp["started_at_msk"] = None
+dp["started_at"] = get_host_time()
+dp["started_at_msk"] = get_moscow_time()
 dp["is_active"] = True  # Флаг активности бота
 dp["logs"] = []
 dp["users"] = {}
 dp["sessions"] = {}
 dp["task_queue"] = []
-dp["configs"] = {"max_connections": 100, "retry_interval": 5, "time_format": None}
+dp["configs"] = {"max_connections": 100, "retry_interval": 5, "time_format": BotVar.time_format}
 dp["metrics"] = {"messages_received": 0, "messages_sent": 0, "errors": 0}
 dp["modules"] = {}
 dp["state"] = {}
@@ -41,7 +43,6 @@ bot_properties = DefaultBotProperties(
     show_caption_above_media=False,  # Показываем подпись выше медиа
 )
 bot = Bot(token=bot_token, default=bot_properties)     # Объявление бота
-scheduler = AsyncIOScheduler(timezone=None)   # Создание планировщика
 F_Media = F.photo | F.files | F.video | F.animation | F.voice | F.video_note  # Фильтр-медиа
 F_All = F.text | F.photo | F.files | F.video | F.animation | F.voice | F.video_note # Фильтр на все
 

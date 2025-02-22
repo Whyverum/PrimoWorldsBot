@@ -1,10 +1,9 @@
-# BotLibrary/logs.py
+# BotLibrary/system/logs.py
 # Создание логгеров и их шаблон для проекта
 
 import sys
 from loguru import logger
 from ProjectsFiles.configs.config import BotLogs
-
 
 # Создание обычного логгера + логгер в файл
 async def setup_logger():

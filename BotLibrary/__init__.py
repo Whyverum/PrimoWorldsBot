@@ -1,6 +1,9 @@
-# ProjectsFiles/__init__.py
-# Инициализация пакета ProjectsFiles, для настройки переменных проекта
+# BotLibrary/__init__.py
+# Инициализация пакета BotLibrary, для настройки личных библиотек проекта
 
 # Экспортирование модулей во внешние слои проекта
-from .bots import *
-from .logs import *
+from .analytics import *
+from .loggers import *
+from .system import *
+from .timer import *
+from .validators import *
