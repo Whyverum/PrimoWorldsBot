@@ -7,10 +7,11 @@ from BotLibrary import *
 
 # Класс-шаблон для команд
 class CommandHandler:
-    def __init__(self, name: str, description: str,
-                 keywords: list, text_msg: str,
-                 keyboard=None, prefix = BotVar.prefix,
-                 ignore_case = True,
+    def __init__(self, name: str, keywords : list,
+                 description: str = "Описание команды", text_msg : str = "Сообщение",
+                 keyboard = None, prefix = BotVar.prefix,
+                 ignore_case : bool = True, activate_keywoards : bool = True,
+                 activate_commands : bool = True,
                  ):
         """
         Универсальный обработчик команд для бота.
@@ -30,10 +31,10 @@ class CommandHandler:
         self.keyboard = keyboard
 
         # Привязываем хэндлер к роутеру
-        self.router.message(
-            Command(*keywords, prefix=prefix, ignore_case=ignore_case)
-        )(self.handler)
-        self.router.message(F.text.lower().in_(keywords))(self.handler)
+        if activate_commands:
+            self.router.message(Command(*keywords, prefix=prefix, ignore_case=ignore_case))(self.handler)
+        if activate_keywoards:
+            self.router.message(F.text.lower().in_(keywords))(self.handler)
 
 
     async def handler(self, message: types.Message):

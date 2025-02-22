@@ -2,3 +2,4 @@
 # Инициализация модуля inline_kb, для inline-клавиатур
 
 # Экспортирование модулей во внешние слои проекта
+from start_inline_kb import get_start_kb
