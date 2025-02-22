@@ -22,6 +22,7 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/BotLibrary" />
+        <option value="$MODULE_DIR$/ProjectsFiles/configs" />
       </list>
     </option>
   </component>
