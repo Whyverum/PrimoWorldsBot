@@ -3,6 +3,11 @@
 
 from aiogram.types import ContentType
 
+# Настройка экспорта из модуля
+__all__ = ("types_message",)
+
+
+# Функция определения типа сообщения
 def types_message(message):
     # Словарь для соответствия типов сообщений
     content_types = {

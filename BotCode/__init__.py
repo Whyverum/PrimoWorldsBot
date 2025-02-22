@@ -1,6 +1,11 @@
 # BotCode/__init__.py
-# Инициализация пакета BotCode, для создания кода проекта
+# Инициализация пакета BotCode, для работы с главными частями кода
 
-# Экспортирование модулей во внешние слои проекта
-from .keyboards import *
-from .routers import *
+from aiogram import Router
+from .routers import router as all_routers
+
+# Объявление главного роутера
+router = Router(name="main_router")
+
+# Список подключаемых роутеров сверху-вниз
+router.include_routers(all_routers)

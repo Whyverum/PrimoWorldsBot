@@ -4,3 +4,4 @@
 # Экспортирование модулей во внешние слои проекта
 from .bots import *
 from .bot_edit import *
+from .directory import *

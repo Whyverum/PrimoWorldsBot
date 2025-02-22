@@ -3,4 +3,5 @@
 
 # Экспортирование модулей во внешние слои проекта
 from .logs import *
+from .msg_logger import *
 from .start_info_out import *

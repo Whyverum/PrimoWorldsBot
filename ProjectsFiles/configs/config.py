@@ -8,7 +8,7 @@ class Permissions:
 
     logging = True  # Вывод логов в консоль (True)
     logging_to_file = False     # Вывод логов в файл (True)
-    msg_logging = False     # Логирование сообщений (В разработке)
+    msg_logging = False     # Логирование сообщений в консоль (В разработке)
 
     start_info_console = True   # Вывод информации о боте в начале (True)
 
@@ -48,9 +48,27 @@ class BotVar:
     prefix = ('$', '!', '.', '%', '&', ':', '|', '+', '-', '/', '~', '?')
 
 
+# Класс для хранения типов директорий
+class TypeDirectory:
+    # Типы сообщений и список директорий для создания
+    private_msg = "Личные"
+    group_msg = "Группы"
+
+    # Названия директорий-хранилищ
+    avatar = "Avatar"
+    photo = "Photo"
+    video = "Video"
+    videonote = "VideoNote"
+    gif = "GIF"
+    files = "Document"
+    voice = "Voice"
+    media_directories = [avatar, photo, video, videonote, gif, files, voice]
+
 # Класс создания директорий проекта
 class ProjectPath:
     BotLogs = "BotLogs"
+
+    personal_media = "ProjectsFiles/media"
 
 
 # Настройки логирования бота

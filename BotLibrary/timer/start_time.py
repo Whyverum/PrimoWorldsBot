@@ -3,8 +3,13 @@
 
 import pytz
 from datetime import datetime
+from tzlocal import get_localzone
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from ProjectsFiles import BotVar
+
+# Создание планировщика
+scheduler = AsyncIOScheduler(timezone=get_localzone().key)
+
 
 # Функция получение времени по Московскому времени
 def get_moscow_time():
@@ -17,7 +22,3 @@ def get_moscow_time():
 def get_host_time():
     host_time = datetime.now()
     return host_time.strftime(BotVar.time_format)
-
-
-# Создание планировщика
-scheduler = AsyncIOScheduler(timezone=get_moscow_time())
