@@ -16,6 +16,9 @@
       <sourceFolder url="file://$MODULE_DIR$/BotCode" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BotLibrary/samples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Test/GUI" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Test/commands" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Test/old_files" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.13 (PRIMOWORLD)" jdkType="Python SDK" />
