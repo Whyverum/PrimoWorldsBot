@@ -13,7 +13,7 @@ class Logs:
     """Класс для логирования с разными уровнями через loguru."""
 
     @staticmethod
-    def debug(text: str = "Логирование!", log_type: str = "Logs", user: str = "Console", message: Message = None) -> None:
+    def debug(text: str = "Логирование!", log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
         """
         Логирует сообщение на уровне DEBUG.
 
@@ -27,7 +27,7 @@ class Logs:
         logger.bind(log_type=log_type, user=user).debug(text)
 
     @staticmethod
-    def info(text: str = "Логирование!", log_type: str = "Logs", user: str = "Console", message: Message = None) -> None:
+    def info(text: str = "Логирование!", log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
         """
         Логирует сообщение на уровне INFO.
 
@@ -41,7 +41,7 @@ class Logs:
         logger.bind(log_type=log_type, user=user).info(text)
 
     @staticmethod
-    def warning(text: str = "Логирование!", log_type: str = "Logs", user: str = "Console", message: Message = None) -> None:
+    def warning(text: str = "Логирование!", log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
         """
         Логирует сообщение на уровне WARNING.
 
@@ -55,7 +55,7 @@ class Logs:
         logger.bind(log_type=log_type, user=user).warning(text)
 
     @staticmethod
-    def error(text: str = "Логирование!", log_type: str = "Logs", user: str = "Console", message: Message = None) -> None:
+    def error(text: str = "Логирование!", log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
         """
         Логирует сообщение на уровне ERROR.
 

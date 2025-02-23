@@ -43,7 +43,7 @@ class CommandHandler:
     async def handler(self, message: types.Message):
         """Основной хэндлер команды."""
         try:
-            Logs.info(log_type=self.name.capitalize(), text=f"использовал(а) команду /{self.name}")
+            Logs.info(log_type=self.name.capitalize(), user=username(message), text=f"использовал(а) команду /{self.name}")
             await message.reply(
                 text=self.text_msg,
                 reply_markup=self.keyboard() if self.keyboard else None,
@@ -51,4 +51,4 @@ class CommandHandler:
 
         # Проверка на ошибку
         except Exception as e:
-            Logs.error(log_type=self.name.capitalize(), user=message.from_user.username, text=f"Ошибка команды: {e}")
+            Logs.error(log_type=self.name.capitalize(), user=username(message), text=f"Ошибка команды: {e}")

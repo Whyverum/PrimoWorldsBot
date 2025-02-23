@@ -30,3 +30,6 @@ BotFiles/
 # Игнорирование базы данных пользователя
 MySQL/user_data.db
 MySQL/user_data.json
+
+# Файл подсчета строк
+project_count_line.py
