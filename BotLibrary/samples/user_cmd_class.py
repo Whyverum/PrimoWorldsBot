@@ -5,6 +5,7 @@ from aiogram import Router, types, F
 from aiogram.enums import ChatAction
 from aiogram.filters import Command
 
+from BotLibrary import valid_url
 from ProjectsFiles import BotVar
 from BotLibrary.validators import username
 from BotLibrary.loggers import Logs
@@ -55,6 +56,8 @@ class CommandHandler:
     async def handler(self, message: types.Message):
         """Основной хэндлер команды."""
         try:
+            url : bool = valid_url(self.path_to_media)
+
             Logs.info(log_type=self.log_type, user=username(message), text=f"использовал(а) команду /{self.name}")
             if self.media == "message":
                 await message.reply(
@@ -70,46 +73,115 @@ class CommandHandler:
                     )
             else:
                 if self.media == "photo":
-                    await message.reply_photo(
-                        photo="https://vos-mo.ru/upload/iblock/329/g0s939ge8o1n8xp7rcqnw9kkz9mcfrg2/risunok.jpg",
-                        caption=self.text_msg)
+                    if url:
+                        await message.reply_photo(photo=self.path_to_media,
+                                                  caption=self.text_msg,
+                                                  reply_markup=self.keyboard() if self.keyboard else None,
+                                                  parse_mode=self.parse_mode,
+                                                  disable_notification=self.disable_notification)
+                    else:
+                        await message.reply_photo(photo=types.FSInputFile(path=self.path_to_media),
+                                                  caption=self.text_msg,
+                                                  reply_markup=self.keyboard() if self.keyboard else None,
+                                                  parse_mode=self.parse_mode,
+                                                  disable_notification=self.disable_notification)
+
                     if self.chat_action:
                         await message.bot.send_chat_action(
                             chat_id=message.chat.id,
                             action=ChatAction.UPLOAD_PHOTO,
                         )
 
-                if self.media == "gif":
-                    await message.reply_animation(
-                        animation="https://vos-mo.ru/upload/iblock/329/g0s939ge8o1n8xp7rcqnw9kkz9mcfrg2/risunok.jpg")
+                elif self.media == "gif":
+                    if url:
+                        await message.reply_animation(animation=self.path_to_media,
+                                                  caption=self.text_msg,
+                                                  reply_markup=self.keyboard() if self.keyboard else None,
+                                                  parse_mode=self.parse_mode,
+                                                  disable_notification=self.disable_notification)
+                    else:
+                        await message.reply_animation(animation=types.FSInputFile(path=self.path_to_media),
+                                                  caption=self.text_msg,
+                                                  reply_markup=self.keyboard() if self.keyboard else None,
+                                                  parse_mode=self.parse_mode,
+                                                  disable_notification=self.disable_notification)
                     if self.chat_action:
                         await message.bot.send_chat_action(
                             chat_id=message.chat.id,
                             action=ChatAction.UPLOAD_VIDEO,
                         )
 
-                if self.media == "video":
+
+                elif self.media == "video":
+                    if url:
+                        await message.reply_video(video=self.path_to_media,
+                                                  caption=self.text_msg,
+                                                  reply_markup=self.keyboard() if self.keyboard else None,
+                                                  parse_mode=self.parse_mode,
+                                                  disable_notification=self.disable_notification)
+                    else:
+                        await message.reply_video(video=types.FSInputFile(path=self.path_to_media),
+                                                  caption=self.text_msg,
+                                                  reply_markup=self.keyboard() if self.keyboard else None,
+                                                  parse_mode=self.parse_mode,
+                                                  disable_notification=self.disable_notification)
                     if self.chat_action:
                         await message.bot.send_chat_action(
                             chat_id=message.chat.id,
                             action=ChatAction.UPLOAD_VIDEO,
                         )
 
-                if self.media == "videonote":
+                elif self.media == "videonote":
+                    if url:
+                        await message.reply_video_note(video_note=self.path_to_media,
+                                                  caption=self.text_msg,
+                                                  reply_markup=self.keyboard() if self.keyboard else None,
+                                                  parse_mode=self.parse_mode,
+                                                  disable_notification=self.disable_notification)
+                    else:
+                        await message.reply_video_note(video_note=types.FSInputFile(path=self.path_to_media),
+                                                  caption=self.text_msg,
+                                                  reply_markup=self.keyboard() if self.keyboard else None,
+                                                  parse_mode=self.parse_mode,
+                                                  disable_notification=self.disable_notification)
                     if self.chat_action:
                         await message.bot.send_chat_action(
                             chat_id=message.chat.id,
                             action=ChatAction.UPLOAD_VIDEO_NOTE,
                         )
 
-                if self.media == "audio":
+                elif self.media == "audio":
+                    if url:
+                        await message.reply_audio(audio=self.path_to_media,
+                                                  caption=self.text_msg,
+                                                  reply_markup=self.keyboard() if self.keyboard else None,
+                                                  parse_mode=self.parse_mode,
+                                                  disable_notification=self.disable_notification)
+                    else:
+                        await message.reply_audio(audio=types.FSInputFile(path=self.path_to_media),
+                                                  caption=self.text_msg,
+                                                  reply_markup=self.keyboard() if self.keyboard else None,
+                                                  parse_mode=self.parse_mode,
+                                                  disable_notification=self.disable_notification)
                     if self.chat_action:
                         await message.bot.send_chat_action(
                             chat_id=message.chat.id,
                             action=ChatAction.UPLOAD_VOICE,
                         )
 
-                if self.media == "file":
+                elif self.media == "file":
+                    if url:
+                        await message.reply_document(document=self.path_to_media,
+                                                     caption=self.text_msg,
+                                                     reply_markup=self.keyboard() if self.keyboard else None,
+                                                     parse_mode=self.parse_mode,
+                                                     disable_notification=self.disable_notification)
+                    else:
+                        await message.reply_document(document=types.FSInputFile(path=self.path_to_media),
+                                                     caption=self.text_msg,
+                                                     reply_markup=self.keyboard() if self.keyboard else None,
+                                                     parse_mode=self.parse_mode,
+                                                     disable_notification=self.disable_notification)
                     if self.chat_action:
                         await message.bot.send_chat_action(
                             chat_id=message.chat.id,

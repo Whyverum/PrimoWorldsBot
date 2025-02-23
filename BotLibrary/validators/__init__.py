@@ -4,3 +4,4 @@
 # Экспортирование модулей во внешние слои проекта
 from .email_valid import *
 from .username import *
+from .url_valid import *

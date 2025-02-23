@@ -13,4 +13,5 @@ start_cmd = CommandHandler(
     callbackdata="keywords",
     text_msg="Старт!",
     keyboard=get_start_kb,
+    media="file", path_to_media="https://gdb.voanews.com/455403fe-91ea-4abe-8d29-3862282ec56b_cx0_cy9_cw0_w408_r1_s.jpg",
 )
