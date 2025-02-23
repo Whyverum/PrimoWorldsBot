@@ -33,51 +33,49 @@ dp["database"] = None
 
 # Настройки для бота
 bot_properties = DefaultBotProperties(
-    parse_mode=BotVar.parse_mode,  # Устанавливаем формат HTML для всех сообщений
-    disable_notification=BotVar.disable_notification,  # Отключаем уведомления при отправке сообщений
-    protect_content=BotVar.protect_content,  # Защищаем содержимое сообщений от копирования
-    allow_sending_without_reply=BotVar.allow_sending_without_reply,  # Разрешаем отправлять сообщения без ответа на другое сообщение
-    link_preview_is_disabled=BotVar.link_preview_is_disabled,  # Отключаем предварительный просмотр ссылок
+    parse_mode=BotVar.parse_mode,
+    disable_notification=BotVar.disable_notification,
+    protect_content=BotVar.protect_content,
+    allow_sending_without_reply=BotVar.allow_sending_without_reply,
+    link_preview_is_disabled=BotVar.link_preview_is_disabled,
     link_preview_prefer_small_media=BotVar.link_preview_prefer_small_media,
     link_preview_prefer_large_media=BotVar.link_preview_prefer_large_media,
     link_preview_show_above_text=BotVar.link_preview_show_above_text,
-    show_caption_above_media=BotVar.show_caption_above_media,  # Показываем подпись выше медиа
+    show_caption_above_media=BotVar.show_caption_above_media,
 )
 
 # Создание экземпляра бота
-bot = Bot(token=bot_token, default=bot_properties)  # Объявление бота
+bot = Bot(token=bot_token, default=bot_properties)
 
 # Фильтры для различных типов сообщений
-F_Media = F.photo | F.files | F.video | F.animation | F.voice | F.video_note  # Фильтр для медиа
-F_All = F.text | F.photo | F.files | F.video | F.animation | F.voice | F.video_note  # Фильтр на все
+F_Media = F.photo | F.files | F.video | F.animation | F.voice | F.video_note
+F_All = F.text | F.photo | F.files | F.video | F.animation | F.voice | F.video_note
 
 # Класс для хранения данных о боте
 class BotInfo:
     """
     Класс для хранения данных о боте и их обновления.
     """
-    # Статические переменные для хранения данных
     id: int = None
     first_name: str = None
     last_name: str = None
     username: str = None
     description: str = None
     short_description: str = None
-    can_join_groups: bool = None
-    can_read_all_group_messages: bool = None
+    can_join_groups: bool = False
+    can_read_all_group_messages: bool = False
     language_code: str = BotVar.language
     prefix: str = BotVar.prefix
-    is_premium: bool = None
-    added_to_attachment_menu: bool = None
-    supports_inline_queries: bool = None
-    can_connect_to_business: bool = None
-    has_main_web_app: bool = None
+    is_premium: bool = False
+    added_to_attachment_menu: bool = False
+    supports_inline_queries: bool = False
+    can_connect_to_business: bool = False
+    has_main_web_app: bool = False
 
     @classmethod
     def update(cls, bot_info) -> None:
         """
         Обновляет данные о боте.
-
         :param bot_info: Объект с данными о боте, полученные через API Telegram.
         """
         cls.id = bot_info.id
@@ -92,23 +90,16 @@ class BotInfo:
         cls.supports_inline_queries = bot_info.supports_inline_queries
         cls.can_connect_to_business = bot_info.can_connect_to_business
         cls.has_main_web_app = bot_info.has_main_web_app
-        cls.can_join_groups = getattr(bot_info, 'can_join_groups', None)
-        cls.can_read_all_group_messages = getattr(bot_info, 'can_read_all_group_messages', None)
-
+        cls.can_join_groups = getattr(bot_info, 'can_join_groups', False)
+        cls.can_read_all_group_messages = getattr(bot_info, 'can_read_all_group_messages', False)
 
 async def bot_get_info() -> dict:
     """
     Получает информацию о боте и обновляет данные в классе BotInfo.
-
     :return: Словарь с данными о боте.
     """
-    # Получение информации о боте через API
     bot_info_data = await bot.get_me()
-
-    # Обновляем данные о боте в BotInfo
     BotInfo.update(bot_info_data)
-
-    # Возвращаем обновленные данные о боте
     return {
         'bot_info': bot_info_data,
         'id': bot_info_data.id,
@@ -124,5 +115,6 @@ async def bot_get_info() -> dict:
         'supports_inline_queries': bot_info_data.supports_inline_queries,
         'can_connect_to_business': bot_info_data.can_connect_to_business,
         'has_main_web_app': bot_info_data.has_main_web_app,
-        'can_join_groups': getattr(bot_info_data, 'can_join_groups', None),
+        'can_join_groups': getattr(bot_info_data, 'can_join_groups', False),
+        'can_read_all_group_messages': getattr(bot_info_data, 'can_read_all_group_messages', False),
     }

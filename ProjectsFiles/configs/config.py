@@ -16,6 +16,7 @@ class Permissions:
     msg_logging : bool = False     # Логирование сообщений в консоль (В разработке)
 
     start_info_console : bool = True   # Вывод информации о боте в начале (True/False)
+    start_info_to_file : bool = True    # Вывод информации о боте в файл (True/False)
 
     sql_user : bool = True     # Разрешение на регистрацию в базе данных (True/False)
 

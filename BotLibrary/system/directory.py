@@ -29,7 +29,6 @@ async def create_directories(base_directory: str, subdirectories: List[str]) -> 
         # Проверка, существует ли директория, если нет - создаём
         if not os.path.exists(directory_path):
             os.makedirs(directory_path)
-            print(f"Создана директория: {directory_path}")
 
 
 # Функция установки начальных директорий
@@ -39,8 +38,6 @@ async def setup_directories() -> None:
     """
     # Создание директорий для медиа файлов
     await create_directories(ProjectPath.personal_media, TypeDirectory.media_directories)
-
-    # Раскомментируйте следующие строки, если необходимо создать другие директории
-    # await create_directories(ProjectPath.received_media, TypeDirectory.media_directories)
-    # await create_directories(ProjectPath.bot_files, TypeDirectory.avatar_directories)
+    await create_directories(ProjectPath.received_media, TypeDirectory.media_directories)
+    await create_directories(ProjectPath.received_avatars, TypeDirectory.avatar_directories)
     # await create_directories(ProjectPath.msg, TypeDirectory.msg_directories)

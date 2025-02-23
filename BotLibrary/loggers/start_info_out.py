@@ -3,7 +3,7 @@
 
 from time import sleep
 from colorama import Fore
-from ProjectsFiles import Permissions
+from ProjectsFiles import Permissions, ProjectPath, BotVar
 from .custom_loggers import Logs
 from ..system import BotInfo
 
@@ -20,25 +20,26 @@ def bot_info_out() -> str:
         bot_post_name: str = f"Доп. имя: {BotInfo.last_name}\n"
         bot_username: str = f"Юзернейм: @{BotInfo.username}\n"
         bot_id: str = f"ID: {BotInfo.id}\n"
-        bot_language: str = f"Языковой код: {BotInfo.language_code}\n"
         bot_can_join_groups: str = f"Может ли вступать в группы: {BotInfo.can_join_groups}\n"
         bot_can_read_all_group_messages: str = f"Чтение всех сообщений: {BotInfo.can_read_all_group_messages}\n"
-        bot_is_premium: str = f"Является премиум-ботом: {BotInfo.is_premium}\n"
-        bot_added_to_attachment_menu: str = f"Добавлен в меню вложений: {BotInfo.added_to_attachment_menu}\n"
         bot_supports_inline_queries: str = f"Поддерживает инлайн-запросы: {BotInfo.supports_inline_queries}\n"
         bot_can_connect_to_business: str = f"Подключение к бизнес-аккаунтам: {BotInfo.can_connect_to_business}\n"
         bot_has_main_web_app: str = f"Основное веб-приложение: {BotInfo.has_main_web_app}\n"
 
         # Формируем полный текст с выводом информации о боте
-        bot_all_info: str = (f"{bot_name} {bot_post_name} {bot_username} {bot_id} {bot_language} "
-                             f"{bot_can_join_groups} {bot_can_read_all_group_messages} {bot_is_premium} "
-                             f"{bot_added_to_attachment_menu} {bot_supports_inline_queries} {bot_can_connect_to_business} "
+        bot_all_info: str = (f"{bot_name} {bot_post_name} {bot_username} {bot_id} "
+                             f"{bot_can_join_groups} {bot_can_read_all_group_messages} "
+                             f"{bot_supports_inline_queries} {bot_can_connect_to_business} "
                              f"{bot_has_main_web_app}")
 
         # Печатаем все данные в консоль с задержкой в 1 секунду
         sleep(1)
         if Permissions.start_info_console:
             print(Fore.CYAN + bot_all_info)
+        if Permissions.start_info_to_file:
+            #  Преобразуем словарь bot_all_info в строку и записываем в файл
+            with open(ProjectPath.bot_info_log_file, 'w', encoding=BotVar.encod) as file:
+                file.write(str(bot_all_info))
 
         return bot_all_info
 

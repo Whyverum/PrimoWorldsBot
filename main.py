@@ -12,6 +12,7 @@ async def main():
     await setup_logger()
     await bot_get_info()
     Logs.start(text=f"Начало запуска бота @{BotInfo.username}...")
+    bot_info_out()
 
     # Создание пустых директорий
     await setup_directories()
