@@ -1,7 +1,7 @@
 # BotCode/routers/commands/user_cmd/help_cmd.py
 # Работа с командой /help, для вывода помощи пользователю
 
-from .user_cmd_class import CommandHandler
+from ..cmd_class.user_cmd_class import CommandHandler
 
 # Создание команды /help с нужными параметрами
 help_cmd = CommandHandler(

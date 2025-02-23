@@ -4,13 +4,18 @@
 from aiogram.types import ChatAdministratorRights
 from ProjectsFiles import BotEdit
 from .bots import bot
-from ..loggers import logger
+from ..loggers import Logs
 
 # Настройка логирования
 log_type = "Edit"
 
 # Функция для выполнения всех настроек, если они не совпадают
-async def set_all():
+async def set_all() -> None:
+    """
+    Выполняет все необходимые настройки бота, если они не совпадают с текущими значениями.
+
+    :return: None
+    """
     await set_adm_rights()
     await set_bot_name()
     await set_bot_description()
@@ -18,8 +23,12 @@ async def set_all():
 
 
 # Функция установки прав администратора
-async def set_adm_rights():
-    # Применить права администратора для бота
+async def set_adm_rights() -> None:
+    """
+    Устанавливает права администратора для бота, если они отличаются от текущих.
+
+    :return: None
+    """
     rights = ChatAdministratorRights(
         is_anonymous=BotEdit.is_anonymous,
         can_manage_chat=BotEdit.manage_chat,
@@ -45,15 +54,18 @@ async def set_adm_rights():
 
 
 # Функция установки имени бота с проверкой на ограничения
-async def set_bot_name():
+async def set_bot_name() -> None:
+    """
+    Устанавливает имя бота, если оно отличается от текущего и соответствует ограничениям.
+
+    :return: None
+    """
     # Получаем текущее имя бота
     current_name = (await bot.get_me()).first_name
 
     # Проверка длины имени
     if len(BotEdit.name) < 1 or len(BotEdit.name) > 32:
-        # Логируем ошибку, если имя не соответствует ограничению
-        (logger.bind(log_type=log_type, user="NAME_BOT")
-         .error("Имя бота должно быть от 1 до 32 символов."))
+        Logs.error(log_type=log_type, user="NAME_BOT", text="Имя бота должно быть от 1 до 32 символов.")
 
     # Проверяем, совпадает ли текущее имя с тем, которое мы хотим установить
     if current_name != BotEdit.name:
@@ -61,14 +73,18 @@ async def set_bot_name():
 
 
 # Функция установки описания бота с проверкой на ограничения
-async def set_bot_description():
+async def set_bot_description() -> None:
+    """
+    Устанавливает описание бота, если оно отличается от текущего и соответствует ограничениям.
+
+    :return: None
+    """
     # Получаем текущее описание бота
     current_description = await bot.get_my_description()
 
     # Проверка длины описания
     if len(BotEdit.description) > 255:
-        (logger.bind(log_type=log_type, user="DISCRIPT")
-         .error("Короткое описание бота не может превышать 255 символов."))
+        Logs.error(log_type=log_type, user="DISCRIPT", text="Короткое описание бота не может превышать 255 символов.")
 
     # Проверяем, совпадает ли текущее описание с тем, которое мы хотим установить
     if current_description != BotEdit.description:
@@ -76,14 +92,18 @@ async def set_bot_description():
 
 
 # Функция установки короткого описания бота с проверкой на ограничения
-async def set_bot_short_description():
+async def set_bot_short_description() -> None:
+    """
+    Устанавливает короткое описание бота, если оно отличается от текущего и соответствует ограничениям.
+
+    :return: None
+    """
     # Получаем текущее короткое описание бота
     current_short_description = await bot.get_my_short_description()
 
     # Проверка длины короткого описания
     if len(BotEdit.short_description) > 512:
-        (logger.bind(log_type=log_type, user="SHORT_DISCRIPT")
-         .error("Описание виджета не может превышать 512 символов."))
+        Logs.error(log_type=log_type, user="SHORT_DISCRIPT", text="Описание виджета не может превышать 512 символов.")
 
     # Проверяем, совпадает ли текущее короткое описание с тем, которое мы хотим установить
     if current_short_description != BotEdit.short_description:

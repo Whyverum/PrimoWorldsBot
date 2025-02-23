@@ -9,9 +9,9 @@ from BotLibrary import *
 class CommandHandler:
     def __init__(self, name: str, keywords : list,
                  description: str = "Описание команды", text_msg : str = "Сообщение",
-                 keyboard = None, prefix = BotVar.prefix,
+                 keyboard = None, prefix = BotVar.prefix, callbackdata = None,
                  ignore_case : bool = True, activate_keywoards : bool = True,
-                 activate_commands : bool = True,
+                 activate_commands : bool = True, activate_callback : bool = True,
                  ):
         """
         Универсальный обработчик команд для бота.
@@ -27,6 +27,7 @@ class CommandHandler:
         self.log_type = name.capitalize()
         self.description = description
         self.keywords = keywords
+        self.callbackdata = callbackdata
         self.text_msg = text_msg
         self.keyboard = keyboard
 
@@ -35,13 +36,14 @@ class CommandHandler:
             self.router.message(Command(*keywords, prefix=prefix, ignore_case=ignore_case))(self.handler)
         if activate_keywoards:
             self.router.message(F.text.lower().in_(keywords))(self.handler)
+        if activate_callback:
+            self.router.message(F.text.lower().in_(callbackdata))(self.handler)
 
 
     async def handler(self, message: types.Message):
         """Основной хэндлер команды."""
-        user = f"@{message.from_user.username or message.from_user.id}"
         try:
-            logger.bind(log_type=self.name.capitalize(), user=user).info(f"использовал(а) команду /{self.name}")
+            Logs.info(log_type=self.name.capitalize(), text=f"использовал(а) команду /{self.name}")
             await message.reply(
                 text=self.text_msg,
                 reply_markup=self.keyboard() if self.keyboard else None,
@@ -49,4 +51,4 @@ class CommandHandler:
 
         # Проверка на ошибку
         except Exception as e:
-            logger.bind(log_type=self.name.capitalize(), user=user).error(f"Ошибка команды: {e}")
+            Logs.error(log_type=self.name.capitalize(), text=f"Ошибка команды: {e}")

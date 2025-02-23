@@ -3,12 +3,19 @@
 
 import os
 from ProjectsFiles import ProjectPath, TypeDirectory
+from typing import List
 
 # Настройка экспорта из модуля
 __all__ = ("create_directories", "setup_directories")
 
-# Функция создания пустых директорий
-async def create_directories(base_directory, subdirectories):
+
+async def create_directories(base_directory: str, subdirectories: List[str]) -> None:
+    """
+    Создает указанные поддиректории в указанной базовой директории, если они еще не существуют.
+
+    :param base_directory: Путь к базовой директории.
+    :param subdirectories: Список поддиректорий, которые необходимо создать.
+    """
     # Создание директорий и файлов в каждой из них
     for subdirectory in subdirectories:
         directory_path = os.path.join(base_directory, subdirectory)
@@ -16,11 +23,17 @@ async def create_directories(base_directory, subdirectories):
         # Проверка, существует ли директория, если нет - создаём
         if not os.path.exists(directory_path):
             os.makedirs(directory_path)
+            print(f"Создана директория: {directory_path}")
 
 
-# Начальная установка пустых директорий
-async def setup_directories():
+async def setup_directories() -> None:
+    """
+    Настройка начальных пустых директорий для проекта.
+    """
+    # Создание директорий для медиа файлов
     await create_directories(ProjectPath.personal_media, TypeDirectory.media_directories)
+
+    # Раскомментируйте следующие строки, если необходимо создать другие директории
     # await create_directories(ProjectPath.received_media, TypeDirectory.media_directories)
     # await create_directories(ProjectPath.bot_files, TypeDirectory.avatar_directories)
     # await create_directories(ProjectPath.msg, TypeDirectory.msg_directories)

@@ -2,15 +2,22 @@
 # Определение типа сообщения
 
 from aiogram.types import ContentType
+from aiogram.types import Message
 
 # Настройка экспорта из модуля
 __all__ = ("types_message",)
 
 
 # Функция определения типа сообщения
-def types_message(message):
+def types_message(message: Message) -> str:
+    """
+    Функция для определения типа сообщения на основе его содержимого.
+
+    :param message: Сообщение от пользователя.
+    :return: Описание типа сообщения.
+    """
     # Словарь для соответствия типов сообщений
-    content_types = {
+    content_types: dict = {
         ContentType.TEXT: "Текст",
         ContentType.PHOTO: "Фото",
         ContentType.STICKER: "Стикер",
@@ -61,7 +68,7 @@ def types_message(message):
 
     # Проверка для обычных сообщений
     for content_type, description in content_types.items():
-        if getattr(message, str(content_type.value)):
+        if getattr(message, str(content_type.value)):  # Если тип содержимого найден
             return description
 
     # Если сообщение не соответствует ни одному из типов
