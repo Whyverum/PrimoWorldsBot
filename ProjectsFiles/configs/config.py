@@ -118,7 +118,7 @@ class BotLogs:
     # Шаблон логов для предупреждений
     warning_text : str = (
         "<yellow>{time:YYYY-MM-DD HH:mm:ss}</yellow> <red>|</red> "
-        "<orange>WARNING-{extra[log_type]}</orange> <red>|</red> "
+        "<yellow>WARNING-{extra[log_type]}</yellow> <red>|</red> "
         "<red>{extra[user]} |</red> <level>{message}</level>"
     )
 

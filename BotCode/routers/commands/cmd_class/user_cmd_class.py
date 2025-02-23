@@ -51,4 +51,4 @@ class CommandHandler:
 
         # Проверка на ошибку
         except Exception as e:
-            Logs.error(log_type=self.name.capitalize(), text=f"Ошибка команды: {e}")
+            Logs.error(log_type=self.name.capitalize(), user=message.from_user.username, text=f"Ошибка команды: {e}")

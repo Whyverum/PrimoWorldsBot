@@ -2,14 +2,15 @@
 # Создания инлайн-клавиатуры на команду: /start
 
 from aiogram.types import InlineKeyboardMarkup
-from BotLibrary import ikb
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 # Создание роутера и настройка экспорта
 __all__ = ("get_start_kb",)
 
-
 # Функция создания клавиатуры на команду: /actor
 def get_start_kb() -> InlineKeyboardMarkup:
+    ikb = InlineKeyboardBuilder()
+
     # Добавляем кнопки, группируя их по строкам
     ikb.button(text="Посмотреть инфо-канал", url="https://t.me/laveilinfo")
     ikb.button(text="Отправить анкету", url="https://t.me/laveilinfo")

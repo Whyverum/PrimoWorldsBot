@@ -5,7 +5,6 @@ from aiogram import Dispatcher, Bot, F
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
-from aiogram.types import Bot as BotType
 
 from ..timer import get_host_time, get_moscow_time
 from ProjectsFiles import bot_token, BotVar
