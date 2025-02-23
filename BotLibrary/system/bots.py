@@ -2,7 +2,6 @@
 # Создание и настройка бота в одном файле
 
 from aiogram import Dispatcher, Bot, F
-from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 
@@ -34,12 +33,15 @@ dp["database"] = None
 
 # Настройки для бота
 bot_properties = DefaultBotProperties(
-    parse_mode=ParseMode.HTML,  # Устанавливаем формат HTML для всех сообщений
-    disable_notification=True,  # Отключаем уведомления при отправке сообщений
-    protect_content=True,  # Защищаем содержимое сообщений от копирования
-    allow_sending_without_reply=True,  # Разрешаем отправлять сообщения без ответа на другое сообщение
-    link_preview_is_disabled=True,  # Отключаем предварительный просмотр ссылок
-    show_caption_above_media=False,  # Показываем подпись выше медиа
+    parse_mode=BotVar.parse_mode,  # Устанавливаем формат HTML для всех сообщений
+    disable_notification=BotVar.disable_notification,  # Отключаем уведомления при отправке сообщений
+    protect_content=BotVar.protect_content,  # Защищаем содержимое сообщений от копирования
+    allow_sending_without_reply=BotVar.allow_sending_without_reply,  # Разрешаем отправлять сообщения без ответа на другое сообщение
+    link_preview_is_disabled=BotVar.link_preview_is_disabled,  # Отключаем предварительный просмотр ссылок
+    link_preview_prefer_small_media=BotVar.link_preview_prefer_small_media,
+    link_preview_prefer_large_media=BotVar.link_preview_prefer_large_media,
+    link_preview_show_above_text=BotVar.link_preview_show_above_text,
+    show_caption_above_media=BotVar.show_caption_above_media,  # Показываем подпись выше медиа
 )
 
 # Создание экземпляра бота

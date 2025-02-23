@@ -11,7 +11,7 @@ async def main():
     # Функция создания логеров и получения информации о боте
     await setup_logger()
     await bot_get_info()
-    logger.bind(log_type="AEP", user="@Console").info(f"Начало запуска бота @{BotInfo.username}...")
+    Logs.start(text=f"Начало запуска бота @{BotInfo.username}...")
 
     # Создание пустых директорий
     await setup_directories()

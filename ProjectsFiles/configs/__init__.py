@@ -4,3 +4,5 @@
 # Экспортирование модулей во внешние слои проекта
 from .config import *
 from .primoenv import *
+from .logs_config import *
+from .project_path import *

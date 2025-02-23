@@ -1,18 +1,18 @@
 # ProjectsFiles/config.py
 # Файл-хранилище всех конфигов и настроек для бота
 
-from typing import List, Tuple
+from typing import Tuple
 
 # Список разрешений для бота
 class Permissions:
     """
     Класс для хранения настроек разрешений бота.
     """
-    bot_edit : bool = False    # Разрешение на изменение имени, описания и виджета (True/False)
+    bot_edit : bool = True    # Разрешение на изменение имени, описания и виджета (True/False)
     delete_webhook : bool = True   # Разрешение на удаление веб-хука (True/False)
 
     logging : bool = True  # Разрешение на вывод логов в консоль (True/False)
-    logging_to_file : bool = False     # Разрешение на вывод логов в файл (True/False)
+    logging_to_file : bool = True     # Разрешение на вывод логов в файл (True/False)
     msg_logging : bool = False     # Логирование сообщений в консоль (В разработке)
 
     start_info_console : bool = True   # Вывод информации о боте в начале (True/False)
@@ -58,73 +58,12 @@ class BotVar:
     time_format : str = "%Y-%m-%d %H:%M:%S"
     prefix : Tuple[str, ...] = ('$', '!', '.', '%', '&', ':', '|', '+', '-', '/', '~', '?')
 
-
-# Класс для хранения типов директорий
-class TypeDirectory:
-    """
-    Класс для хранения типов сообщений и директорий, которые нужно создать.
-    """
-    # Типы сообщений и список директорий для создания
-    private_msg : str = "Личные"
-    group_msg : str = "Группы"
-
-    # Названия директорий-хранилищ
-    avatar : str = "Avatar"
-    photo : str = "Photo"
-    video : str = "Video"
-    videonote : str = "VideoNote"
-    gif : str = "GIF"
-    files : str = "Document"
-    voice : str = "Voice"
-    media_directories : List[str] = [avatar, photo, video, videonote, gif, files, voice]
-
-
-# Класс создания директорий проекта
-class ProjectPath:
-    """
-    Класс для хранения путей к проектам и логам.
-    """
-    BotLogs : str = "BotLogs"
-    personal_media : str = "ProjectsFiles/media"
-
-
-# Настройки логирования бота
-class BotLogs:
-    """
-    Класс для хранения параметров логирования: шаблоны логов, разрешения, размеры файлов и т. д.
-    """
-    # Разрешение на ведение логов
-    permission : bool = Permissions.logging
-    permission_to_file : bool = Permissions.logging_to_file
-    permission_msg : bool = Permissions.msg_logging
-
-    # Максимальный размер лог-файла
-    max_size : str = "500 MB"
-
-    # Шаблон логов для отладки
-    debug_text : str = (
-        "<cyan>{time:YYYY-MM-DD HH:mm:ss}</cyan> <red>|</red> "
-        "<magenta>DEBUG-{extra[log_type]}</magenta> <red>|</red> "
-        "<yellow>{extra[user]} |</yellow> <level>{message}</level>"
-    )
-
-    # Шаблон логов для информации
-    info_text : str = (
-        "<green>{time:YYYY-MM-DD HH:mm:ss}</green> <red>|</red> "
-        "<blue>PRIMO-{extra[log_type]}</blue> <red>|</red> "
-        "<red>{extra[user]} |</red> <level>{message}</level>"
-    )
-
-    # Шаблон логов для предупреждений
-    warning_text : str = (
-        "<yellow>{time:YYYY-MM-DD HH:mm:ss}</yellow> <red>|</red> "
-        "<yellow>WARNING-{extra[log_type]}</yellow> <red>|</red> "
-        "<red>{extra[user]} |</red> <level>{message}</level>"
-    )
-
-    # Шаблон логов для ошибок
-    error_text : str = (
-        "<level>{time:YYYY-MM-DD HH:mm:ss} | "
-        "<bold>ERROR-{extra[log_type]}</bold> | "
-        "{extra[user]} | {message}</level>"
-    )
+    parse_mode : str = "HTML"  # Устанавливаем формат HTML для всех сообщений
+    disable_notification : bool = False  # Отключаем уведомления при отправке сообщений
+    protect_content : bool = False  # Защищаем содержимое сообщений от копирования
+    allow_sending_without_reply : bool = True  # Разрешаем отправлять сообщения без ответа на другое сообщение
+    link_preview_is_disabled : bool = False  # Отключаем предварительный просмотр ссылок
+    link_preview_prefer_small_media : bool = False
+    link_preview_prefer_large_media : bool = True
+    link_preview_show_above_text : bool = False
+    show_caption_above_media : bool = False  # Показываем подпись выше медиа

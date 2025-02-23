@@ -13,7 +13,21 @@ class Logs:
     """Класс для логирования с разными уровнями через loguru."""
 
     @staticmethod
-    def debug(text: str = "Логирование!", log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
+    def start(text: str = "Логирование!", system: str = "PRIMO",
+              log_type: str = "AEP", user: str = "@Console", message: Message = None) -> None:
+        """
+        Логирует сообщение на уровне DEBUG.
+
+        :param text: Сообщение для логирования.
+        :param log_type: Тип лога (например, "Logs").
+        :param user: Имя пользователя или источник вызова лога.
+        :param message: Сообщение от пользователя, если необходимо извлечь имя.
+        """
+        logger.bind(system=system, user=user, log_type=log_type).log("START", text)
+
+    @staticmethod
+    def debug(text: str = "Логирование!", system : str = "DEBUG",
+              log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
         """
         Логирует сообщение на уровне DEBUG.
 
@@ -24,10 +38,11 @@ class Logs:
         """
         if message:
             user = username(message)
-        logger.bind(log_type=log_type, user=user).debug(text)
+        logger.bind(system=system, log_type=log_type, user=user).debug(text)
 
     @staticmethod
-    def info(text: str = "Логирование!", log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
+    def info(text: str = "Логирование!", system : str = "PRIMO",
+             log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
         """
         Логирует сообщение на уровне INFO.
 
@@ -38,10 +53,11 @@ class Logs:
         """
         if message:
             user = username(message)
-        logger.bind(log_type=log_type, user=user).info(text)
+        logger.bind(system=system, log_type=log_type, user=user).info(text)
 
     @staticmethod
-    def warning(text: str = "Логирование!", log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
+    def warning(text: str = "Логирование!", system : str = "WARNING",
+                log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
         """
         Логирует сообщение на уровне WARNING.
 
@@ -52,10 +68,11 @@ class Logs:
         """
         if message:
             user = username(message)
-        logger.bind(log_type=log_type, user=user).warning(text)
+        logger.bind(system=system, log_type=log_type, user=user).warning(text)
 
     @staticmethod
-    def error(text: str = "Логирование!", log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
+    def error(text: str = "Логирование!", system : str = "ERROR",
+              log_type: str = "Logs", user: str = "@Console", message: Message = None) -> None:
         """
         Логирует сообщение на уровне ERROR.
 
@@ -66,4 +83,4 @@ class Logs:
         """
         if message:
             user = username(message)
-        logger.bind(log_type=log_type, user=user).error(text)
+        logger.bind(system=system, log_type=log_type, user=user).error(text)

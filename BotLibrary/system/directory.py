@@ -6,9 +6,15 @@ from ProjectsFiles import ProjectPath, TypeDirectory
 from typing import List
 
 # Настройка экспорта из модуля
-__all__ = ("create_directories", "setup_directories")
+__all__ = ("create_directories", "setup_directories", "create_directory")
 
 
+# Функция создания директории
+async def create_directory(directory : str) -> None:
+    os.makedirs(directory)
+
+
+# Функция создания поддиректорий
 async def create_directories(base_directory: str, subdirectories: List[str]) -> None:
     """
     Создает указанные поддиректории в указанной базовой директории, если они еще не существуют.
@@ -26,6 +32,7 @@ async def create_directories(base_directory: str, subdirectories: List[str]) -> 
             print(f"Создана директория: {directory_path}")
 
 
+# Функция установки начальных директорий
 async def setup_directories() -> None:
     """
     Настройка начальных пустых директорий для проекта.
