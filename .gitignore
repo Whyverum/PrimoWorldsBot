@@ -1,6 +1,5 @@
 # .gitignore
-# Файл, что запрещает экспортировать определенные части кода
-
+# Файл, запрещающий экспорт определённых частей кода
 
 # Игнорирование локального окружения и пользовательских конфигураций IDE
 .*
@@ -9,29 +8,173 @@
 .venv/
 *.iml
 
-
-# Игнорирование директории сборки
+# Игнорирование директорий сборки
 build/
 dist/
-
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
 # Игнорирование временных файлов операционной системы
 Thumbs.db
-
 
 # Игнорирование файлов логов
 BotLogs/
 *.log
 *.logs
 
-
 # Игнорирование всех скачанных данных логирования
 BotFiles/
-
 
 # Игнорирование базы данных пользователя
 MySQL/user_data.db
 MySQL/user_data.json
 
-# Файл подсчета строк
+# Файл подсчёта строк
 project_count_line.py
+
+# Игнорирование байт-кодных / оптимизированных / DLL файлов
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Игнорирование C-расширений
+*.so
+
+# PyInstaller
+# Обычно эти файлы создаются скриптом Python из шаблона
+# перед сборкой exe, чтобы внедрить дату или другую информацию.
+*.manifest
+*.spec
+
+# Логи установщика
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Отчёты тестирования / покрытия кода
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Файлы переводов
+*.mo
+*.pot
+
+# Файлы Django
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Файлы Flask
+instance/
+.webassets-cache
+
+# Файлы Scrapy
+.scrapy
+
+# Документация Sphinx
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+# Для библиотеки или пакета эти файлы можно игнорировать,
+# так как код предназначен для выполнения в нескольких средах.
+# .python-version
+
+# pipenv
+# Согласно pypa/pipenv#598, рекомендуется включать Pipfile.lock в контроль версий.
+# Однако, при совместной разработке, если есть платформозависимые зависимости
+# или зависимости без кроссплатформенной поддержки,
+# pipenv может установить неподходящие зависимости.
+#Pipfile.lock
+
+# poetry
+# Как и Pipfile.lock, рекомендуется включать poetry.lock в контроль версий,
+# особенно для бинарных пакетов для обеспечения воспроизводимости.
+#poetry.lock
+
+# pdm
+# Как и Pipfile.lock, рекомендуется включать pdm.lock в контроль версий.
+#pdm.lock
+# pdm хранит конфигурации проекта в .pdm.toml, но не рекомендуется включать его в контроль версий.
+# .pdm.toml
+
+# PEP 582 (например, используется в github.com/David-OConnor/pyflow и github.com/pdm-project/pdm)
+__pypackages__/
+
+# Файлы Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Разобранные файлы SageMath
+*.sage.py
+
+# Среды разработки
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Настройки проекта Spyder
+.spyderproject
+.spyproject
+
+# Настройки проекта Rope
+.ropeproject
+
+# Документация mkdocs
+/site
+
+# Кэш mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Анализатор типов Pyre
+.pyre/
+
+# Статический анализатор типов pytype
+.pytype/
+
+# Отладочные символы Cython
+cython_debug/
+
+# PyCharm
+# JetBrains поддерживает отдельный шаблон JetBrains.gitignore,
+# который можно найти здесь: https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore.
+.idea/
