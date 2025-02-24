@@ -3,3 +3,4 @@
 
 # Экспортирование модулей во внешние слои проекта
 from .user_cmd_class import *
+from .keyboards_sample import *

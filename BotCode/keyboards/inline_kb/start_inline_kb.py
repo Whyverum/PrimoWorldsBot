@@ -1,20 +1,16 @@
 # BotCode/keyboards/inline_kb/start_inline_kb.py
-# Создания инлайн-клавиатуры на команду: /start
+# Создание инлайн-клавиатуры на команду: /start
 
-from aiogram.types import InlineKeyboardMarkup
-from aiogram.utils.keyboard import InlineKeyboardBuilder
+from BotLibrary import BaseInlineKeyboard
 
-# Создание роутера и настройка экспорта
+# Настройка экспорта в модули
 __all__ = ("get_start_kb",)
 
-# Функция создания клавиатуры на команду: /actor
-def get_start_kb() -> InlineKeyboardMarkup:
-    ikb = InlineKeyboardBuilder()
-
-    # Добавляем кнопки, группируя их по строкам
-    ikb.button(text="Посмотреть инфо-канал", url="https://t.me/laveilinfo")
-    ikb.button(text="Отправить анкету", url="https://t.me/laveilinfo")
-    ikb.button(text="Предложить союз", url="https://t.me/laveilinfo")
-
-    ikb.adjust(1)
-    return ikb.as_markup()
+# Функция создания клавиатуры
+def get_start_kb(row_width : int = 1):
+    buttons = [
+        ("Я Новичок!", None, "novice_cbd"),
+        ("Где я?", None, "where_i_am_cbd"),
+        ("Мне уже известен этот феномен..", None, "menu"),
+    ]
+    return BaseInlineKeyboard(buttons, row_width=row_width).get_keyboard()

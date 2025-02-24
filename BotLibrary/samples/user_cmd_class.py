@@ -11,12 +11,12 @@ from BotLibrary.validators import username
 from BotLibrary.loggers import Logs
 
 # Настройки экспорта в модули
-__all__ = ("CommandHandler", )
+__all__ = ("CommandHandler",)
 
 # Класс-шаблон для команд
 class CommandHandler:
-    def __init__(self, name: str, keywords : list, chat_action : bool = False,
-                 description: str = "Описание команды", text_msg : str = "Сообщение",
+    def __init__(self, text_msg, name: str, keywords : list, chat_action : bool = False,
+                 description: str = "Описание команды",  tg_links : bool = False,
                  keyboard = None, prefix = BotVar.prefix, callbackdata = None,
                  ignore_case : bool = True, activate_keywoards : bool = True,
                  activate_commands : bool = True, activate_callback : bool = True,
@@ -38,6 +38,7 @@ class CommandHandler:
 
         self.media = media.lower()
         self.path_to_media = path_to_media
+        self.tg_links = tg_links
         if callbackdata == "keywords":
             self.callbackdata = keywords
         else:
@@ -57,6 +58,8 @@ class CommandHandler:
         """Основной хэндлер команды."""
         try:
             url : bool = valid_url(self.path_to_media)
+            if self.tg_links:
+                self.text_msg = self.text_msg.replace("<users>", str(message.from_user.id))
 
             Logs.info(log_type=self.log_type, user=username(message), text=f"использовал(а) команду /{self.name}")
             if self.media == "message":
