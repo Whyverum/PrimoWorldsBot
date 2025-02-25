@@ -15,5 +15,4 @@ help_cmd = CommandHandler(
     callbackdata="keywords",
     keyboard=get_help_kb,
     text_msg="Привет! Это команда помощи. Тут ты можешь узнать, как пользоваться ботом.",
-    #media="", path_to_media=""
 )

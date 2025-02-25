@@ -17,13 +17,13 @@ __all__ = ("CommandHandler",)
 
 # Класс-шаблон для команд
 class CommandHandler:
-    def __init__(self, text_msg, name: str, keywords: list, func = None, chat_action: bool = False,
+    def __init__(self, name: str, keywords: list, func=None, text_msg: str = None, chat_action: bool = False,
                  description: str = "Описание команды", tg_links: bool = False,
                  keyboard=None, prefix=BotVar.prefix, callbackdata=None,
                  ignore_case: bool = True, activate_keywoards: bool = True,
                  activate_commands: bool = True, activate_callback: bool = True,
                  media: str = "message", path_to_media=None, parse_mode: str = BotVar.parse_mode,
-                 disable_notification: bool = False):
+                 disable_notification: bool = False, protect: bool = True, ):
 
         self.router = Router(name=f"{name}_router")
         self.name = name
@@ -38,6 +38,7 @@ class CommandHandler:
         self.disable_notification = disable_notification
 
         self.media = media.lower()
+        self.protect = protect
         self.func = func
 
         # Поддержка до 10 медиафайлов через список
@@ -78,22 +79,7 @@ class CommandHandler:
                     reply_markup=self.keyboard() if self.keyboard else None,
                     parse_mode=self.parse_mode,
                     disable_notification=self.disable_notification,
-                )
-                if self.chat_action:
-                    await message.bot.send_chat_action(
-                        chat_id=message.chat.id,
-                        action=ChatAction.TYPING,
-                    )
-            elif self.media == "quiz":
-                # Отправка викторины (quiz)
-                await message.reply_poll(
-                    question=self.text_msg,  # Текст сообщения используется как вопрос викторины
-                    options=["Вариант 1", "Вариант 2"],  # Заглушка, варианты нужно задавать отдельно
-                    is_anonymous=True,
-                    type="quiz",
-                    correct_option_id=0,  # Первый вариант по умолчанию правильный
-                    reply_markup=self.keyboard() if self.keyboard else None,
-                    disable_notification=self.disable_notification
+                    has_protected_content=self.protect,
                 )
                 if self.chat_action:
                     await message.bot.send_chat_action(
@@ -117,14 +103,16 @@ class CommandHandler:
 
                     await message.reply_media_group(
                         media=media_group,
-                        disable_notification=self.disable_notification
+                        disable_notification=self.disable_notification,
+                        has_protected_content=self.protect,
+
                     )
                     # Отправка клавиатуры отдельным сообщением, если есть
                     if self.keyboard:
                         await message.reply(
                             text=" ",
                             reply_markup=self.keyboard(),
-                            disable_notification=self.disable_notification
+                            disable_notification=self.disable_notification,
                         )
                     if self.chat_action:
                         await message.bot.send_chat_action(
@@ -144,7 +132,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             else:
                                 await message.reply_photo(
@@ -152,7 +141,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             if self.chat_action and is_last:
                                 await message.bot.send_chat_action(
@@ -167,7 +157,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             else:
                                 await message.reply_animation(
@@ -175,7 +166,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             if self.chat_action and is_last:
                                 await message.bot.send_chat_action(
@@ -190,7 +182,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             else:
                                 await message.reply_video(
@@ -198,7 +191,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             if self.chat_action and is_last:
                                 await message.bot.send_chat_action(
@@ -213,7 +207,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             else:
                                 await message.reply_video_note(
@@ -221,7 +216,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             if self.chat_action and is_last:
                                 await message.bot.send_chat_action(
@@ -236,7 +232,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             else:
                                 await message.reply_audio(
@@ -244,7 +241,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             if self.chat_action and is_last:
                                 await message.bot.send_chat_action(
@@ -259,7 +257,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             else:
                                 await message.reply_document(
@@ -267,7 +266,8 @@ class CommandHandler:
                                     caption=self.text_msg if is_last else None,
                                     reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                     parse_mode=self.parse_mode,
-                                    disable_notification=self.disable_notification
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
                                 )
                             if self.chat_action and is_last:
                                 await message.bot.send_chat_action(
@@ -275,6 +275,23 @@ class CommandHandler:
                                     action=ChatAction.UPLOAD_DOCUMENT,
                                 )
 
+                            elif self.media == "dice":
+                                await message.reply_dice(
+                                    emoji="🎲",  # Эмодзи кубика как стандартное значение, если нет URL
+                                    caption=self.text_msg if is_last else None,
+                                    reply_markup=self.keyboard() if is_last and self.keyboard else None,
+                                    parse_mode=self.parse_mode,
+                                    disable_notification=self.disable_notification,
+                                    protect_content=self.protect,
+                                    )
+
+                                if self.chat_action and is_last:
+                                    await message.bot.send_chat_action(
+                                        chat_id=message.chat.id,
+                                        action=ChatAction.CHOOSE_STICKER,
+                                    )
+
+
         # Проверка на ошибку
         except Exception as e:
-            Logs.error(log_type=self.log_type, user=username(message), text=f"Ошибка команды: {e}")
+            Logs.error(log_type=self.log_type, text=f"Ошибка команды: {e}")
