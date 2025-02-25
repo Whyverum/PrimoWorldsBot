@@ -1,6 +1,3 @@
-# BotLibrary/analytics/log_type.py
-# Определение типа сообщения
-
 from aiogram.types import ContentType
 from aiogram.types import Message
 
@@ -59,17 +56,26 @@ def types_message(message: Message) -> str:
         ContentType.PASSPORT_DATA: "Данные паспорта",
         ContentType.PROXIMITY_ALERT_TRIGGERED: "Срабатывание предупреждения о близости",
         ContentType.BOOST_ADDED: "Буст чата",
-        ContentType.CHAT_BACKGROUND_SET: "Установлен фон чата"
+        ContentType.CHAT_BACKGROUND_SET: "Установлен фон чата",
+        ContentType.UNKNOWN: "Неизвестно",
+        ContentType.ANY: "Любой тип",
+        ContentType.PAID_MEDIA: "Платный контент",
+        ContentType.MIGRATE_TO_CHAT_ID: "Миграция в чат",
+        ContentType.MIGRATE_FROM_CHAT_ID: "Миграция из чата",
+        ContentType.NEW_CHAT_MEMBERS: "Новые участники чата",
+        ContentType.LEFT_CHAT_MEMBER: "Ушедший участник чата",
+        ContentType.NEW_CHAT_TITLE: "Новое название чата",
+        ContentType.NEW_CHAT_PHOTO: "Новая фотография чата",
+        ContentType.DELETE_CHAT_PHOTO: "Удаление фотографии чата",
+        ContentType.GROUP_CHAT_CREATED: "Создание группового чата",
+        ContentType.SUPERGROUP_CHAT_CREATED: "Создание супергруппы",
+        ContentType.CHANNEL_CHAT_CREATED: "Создание канала",
+        ContentType.MESSAGE_AUTO_DELETE_TIMER_CHANGED: "Изменение таймера автоудаления сообщения",
     }
 
-    # Проверяем тип сообщения и возвращаем описание
-    if message.pinned_message:  # Закрепленное сообщение
-        return content_types.get(ContentType.PINNED_MESSAGE, "Закрепленное сообщение")
-
-    # Проверка для обычных сообщений
-    for content_type, description in content_types.items():
-        if getattr(message, str(content_type.value)):  # Если тип содержимого найден
-            return description
+    # Проверка для контакта (если это сообщение с контактом)
+    if message.contact:
+        return f"{content_types.get(ContentType.CONTACT, 'Контакт')}: {message.contact.phone_number}"
 
     # Если сообщение не соответствует ни одному из типов
     return "Неизвестный тип"
