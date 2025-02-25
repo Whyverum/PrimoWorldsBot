@@ -1,10 +1,6 @@
-# BotCode/keyboards/inline_kb/base_inline_kb.py
-# Базовый класс для создания инлайн-клавиатур
-
-from aiogram.types import InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardRemove
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from typing import List, Tuple, Optional
-
 
 class BaseInlineKeyboard:
     def __init__(self, buttons: List[Tuple[str, Optional[str], Optional[str]]], row_width: int = 1):
@@ -17,8 +13,8 @@ class BaseInlineKeyboard:
 
     def get_keyboard(self) -> InlineKeyboardMarkup:
         """
-        Создаёт инлайн-клавиатуру.
-        :return: объект InlineKeyboardMarkup
+        Создаёт инлайн-клавиатуру и возвращает её вместе с объектом для удаления reply-клавиатуры.
+        :return: кортеж (InlineKeyboardMarkup, ReplyKeyboardRemove)
         """
         ikb = InlineKeyboardBuilder()
         for text, url, callback_data in self.buttons:

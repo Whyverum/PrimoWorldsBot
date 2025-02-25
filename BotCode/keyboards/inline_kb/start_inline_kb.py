@@ -9,7 +9,7 @@ __all__ = ("get_start_kb",)
 # Функция создания клавиатуры
 def get_start_kb(row_width : int = 1):
     buttons = [
-        ("Я Новичок!", None, "novice_cbd"),
+        ("Я Новичок!", "https://t.me/+3DOBTGhBIEc4ZThi", "novice_cbd"),
         ("Где я?", None, "where_i_am_cbd"),
         ("Мне уже известен этот феномен..", None, "menu"),
     ]

@@ -80,6 +80,22 @@ class CommandHandler:
                         chat_id=message.chat.id,
                         action=ChatAction.TYPING,
                     )
+            elif self.media == "quiz":
+                # Отправка викторины (quiz)
+                await message.reply_poll(
+                    question=self.text_msg,  # Текст сообщения используется как вопрос викторины
+                    options=["Вариант 1", "Вариант 2"],  # Заглушка, варианты нужно задавать отдельно
+                    is_anonymous=True,
+                    type="quiz",
+                    correct_option_id=0,  # Первый вариант по умолчанию правильный
+                    reply_markup=self.keyboard() if self.keyboard else None,
+                    disable_notification=self.disable_notification
+                )
+                if self.chat_action:
+                    await message.bot.send_chat_action(
+                        chat_id=message.chat.id,
+                        action=ChatAction.TYPING,
+                    )
             else:
                 if self.media == "photo" and len(self.path_to_media) > 1:
                     # Отправка медиагруппы для фотографий

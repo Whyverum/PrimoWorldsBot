@@ -8,7 +8,7 @@ from BotCode.keyboards import get_start_kb
 start_cmd = CommandHandler(
     name="start",
     description="Добро пожаловать!",
-    keywords=["start"],
+    keywords=["start", "старт", "cnfhn", "ыефке", "пуск", "gecr", "on"],
     keyboard=get_start_kb,
     media="photo",
     path_to_media=[

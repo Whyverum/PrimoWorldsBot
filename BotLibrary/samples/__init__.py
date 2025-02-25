@@ -3,4 +3,5 @@
 
 # Экспортирование модулей во внешние слои проекта
 from .user_cmd_class import *
-from .keyboards_sample import *
+from .inline_kb_sample import *
+from .reply_kb_sample import *
