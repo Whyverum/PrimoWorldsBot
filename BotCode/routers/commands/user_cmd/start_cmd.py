@@ -3,21 +3,17 @@
 
 from BotLibrary import CommandHandler
 from BotCode.keyboards import get_start_kb
-user = "2"
-# Создание команды /start
+
+# Создание команды /start с несколькими медиа
 start_cmd = CommandHandler(
     name="start",
     description="Добро пожаловать!",
-    keywords=["start", "старт", "запуск", "пуск", "on", "вкл", "с", "s", "ы",
-              "ыефке", "cnfhn", "pfgecr", "gecr", "щт", "drk", "restart", "куыефке"],
-    callbackdata="keywords",
+    keywords=["start"],
     keyboard=get_start_kb,
     media="photo",
-    path_to_media="ProjectsFiles/media/Banners/start_banner.jpg",
-    tg_links=True,
-    text_msg=f"""
-Здравствуй, <b><a href="tg://user?id==<users>">дорогой Путник</a></b>. 
-Мое имя - <i>Эми</i>! Я - ваш <i>путеводитель</i> в этом прекрасном месте!
-Вы <b>готовы</b> отправиться в этот дивный мир?
-""",
+    path_to_media=[
+        "ProjectsFiles/media/Banners/start_banner.jpg",
+    ],
+    tg_links=False,
+    text_msg="Привет! Вот группа фото!",
 )

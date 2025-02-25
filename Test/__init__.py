@@ -3,10 +3,6 @@
 
 # Импортируем библиотеки для экспорта
 from aiogram import Router
-from .commands import *
-from .GUI import *
-from .old_files import *
-
 
 # Создание роутера "test_router"
 router = Router(name="test_router")
