@@ -5,6 +5,7 @@ from aiogram import Router
 from .routers import router as all_routers
 from .inline import *
 from .keyboards import *
+from .utils import *
 
 # Объявление главного роутера
 router = Router(name="main_router")
