@@ -17,6 +17,5 @@ start_cmd = CommandHandler(
     path_to_media=[
         "ProjectsFiles/media/Banners/start_banner.jpg",
     ],
-    tg_links=False,
     text_msg="Привет! Вот группа фото!",
 )

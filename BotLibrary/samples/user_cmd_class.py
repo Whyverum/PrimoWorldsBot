@@ -8,7 +8,6 @@ from aiogram.types import InputMediaPhoto
 
 from BotLibrary import valid_url
 from ProjectsFiles import BotVar
-from BotLibrary.validators import username
 from BotLibrary.loggers import Logs
 
 # Настройки экспорта в модули
@@ -71,7 +70,7 @@ class CommandHandler:
             if self.tg_links:
                 self.text_msg = self.text_msg.replace("<users>", str(message.from_user.id))
 
-            Logs.info(log_type=self.log_type, user=username(message), text=f"использовал(а) команду /{self.name}")
+            Logs.info(log_type=self.log_type, text=f"использовал(а) команду /{self.name}")
 
             if self.media == "message":
                 await message.reply(
