@@ -15,5 +15,5 @@ def username(message: Message) -> str:
     :return: Строка с юзернеймом пользователя или его ID.
     """
     if message.from_user:
-        return f"@{message.from_user.username}" if message.from_user.username else str(message.from_user.id)
+        return f"@{message.from_user.username}" if message.from_user.username else f"@{message.from_user.id}"
     return "@Unknown_User"  # Если from_user отсутствует

@@ -5,3 +5,4 @@
 from .email_valid import *
 from .username import *
 from .url_valid import *
+from .normal_word import *
