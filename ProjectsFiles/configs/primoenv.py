@@ -24,6 +24,7 @@ tg_api_hash = getenv("TG_API_HASH")
 admin_id = getenv("ADMIN_ID")
 moderator_id = getenv("MODERATOR_ID")
 tech_id = getenv("MYID")
+bot_owner = getenv("OWNER")
 
 # Айди пользователей, группы и канала
 important_id = getenv("IMPORTANT_ID")

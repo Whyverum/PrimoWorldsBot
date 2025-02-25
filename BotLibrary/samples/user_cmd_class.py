@@ -6,9 +6,8 @@ from aiogram.enums import ChatAction
 from aiogram.filters import Command
 from aiogram.types import InputMediaPhoto
 
-from BotLibrary import valid_url
+from BotLibrary import Logs, valid_url, username
 from ProjectsFiles import BotVar
-from BotLibrary.loggers import Logs
 
 # Настройки экспорта в модули
 __all__ = ("CommandHandler",)
@@ -70,7 +69,7 @@ class CommandHandler:
             if self.tg_links:
                 self.text_msg = self.text_msg.replace("<users>", str(message.from_user.id))
 
-            Logs.info(log_type=self.log_type, text=f"использовал(а) команду /{self.name}")
+            Logs.info(log_type=self.log_type, user=username(message), text=f"использовал(а) команду /{self.name}")
 
             if self.media == "message":
                 await message.reply(
@@ -290,7 +289,6 @@ class CommandHandler:
                                         action=ChatAction.CHOOSE_STICKER,
                                     )
 
-
         # Проверка на ошибку
         except Exception as e:
-            Logs.error(log_type=self.log_type, text=f"Ошибка команды: {e}")
+            Logs.error(log_type=self.log_type, user=username(message), text=f"Ошибка команды: {e}")

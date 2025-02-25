@@ -4,7 +4,7 @@
 from time import sleep
 from colorama import Fore
 
-from ProjectsFiles import Permissions, ProjectPath, BotVar
+from ProjectsFiles import Permissions, ProjectPath, BotVar, bot_owner
 from .custom_loggers import Logs
 from ..system import BotInfo
 
@@ -18,7 +18,7 @@ def bot_info_out() -> str:
     try:
         # Собираем данные о боте
         bot_name: str = f"Основное имя: {BotInfo.first_name}\n"
-        bot_post_name: str = f"Доп. имя: {BotInfo.last_name}\n"
+        bot_post_name: str = f"Владельцы бота: {bot_owner}\n"
         bot_username: str = f"Юзернейм: @{BotInfo.username}\n"
         bot_id: str = f"ID: {BotInfo.id}\n"
         bot_can_join_groups: str = f"Может ли вступать в группы: {BotInfo.can_join_groups}\n"
@@ -45,4 +45,4 @@ def bot_info_out() -> str:
         return bot_all_info
 
     except Exception as e:
-        Logs.error(log_type="INFO", user="Start_INFO", text=f"Ошибка при получении ID пользователя: {e}")
+        Logs.error(log_type="SYS", user="Start_INFO", text=f"Ошибка при получении ID пользователя: {e}")

@@ -58,6 +58,7 @@ class BotInfo:
     """
     id: int = None
     first_name: str = None
+    bot_owner: str = BotVar
     last_name: str = None
     username: str = None
     description: str = None

@@ -35,8 +35,8 @@ class ProjectPath:
     Класс для хранения путей к проектам и логам.
     """
     BotLogs : str = "BotLogs"
-    bot_info_log_file: str = f"{BotLogs}/bot_info.log"
-    start_log_file: str = f"{BotLogs}/start.log"
+    bot_info_log_file: str = f"{BotLogs}/bot_info.logs"
+    start_log_file: str = f"{BotLogs}/start.logs"
     debug_log_file: str = f"{BotLogs}/debug.log"
     info_log_file : str = f"{BotLogs}/info.log"
     warning_log_file: str = f"{BotLogs}/warning.log"
