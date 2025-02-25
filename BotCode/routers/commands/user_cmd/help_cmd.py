@@ -4,6 +4,8 @@
 from BotLibrary import CommandHandler
 from BotCode.keyboards import get_help_kb
 
+# Настройки экспорта в модули
+__all__ = ("help_cmd",)
 
 # Создание команды /help с нужными параметрами
 help_cmd = CommandHandler(

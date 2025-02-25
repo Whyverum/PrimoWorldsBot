@@ -17,7 +17,7 @@ __all__ = ("CommandHandler",)
 
 # Класс-шаблон для команд
 class CommandHandler:
-    def __init__(self, text_msg, name: str, keywords: list, chat_action: bool = False,
+    def __init__(self, text_msg, name: str, keywords: list, func = None, chat_action: bool = False,
                  description: str = "Описание команды", tg_links: bool = False,
                  keyboard=None, prefix=BotVar.prefix, callbackdata=None,
                  ignore_case: bool = True, activate_keywoards: bool = True,
@@ -38,6 +38,8 @@ class CommandHandler:
         self.disable_notification = disable_notification
 
         self.media = media.lower()
+        self.func = func
+
         # Поддержка до 10 медиафайлов через список
         if path_to_media is None:
             self.path_to_media = []
@@ -63,6 +65,8 @@ class CommandHandler:
     async def handler(self, message: types.Message):
         """Основной хэндлер команды."""
         try:
+            if self.func:
+                await self.func(message)  # Вызов переданной функции, если она есть
             if self.tg_links:
                 self.text_msg = self.text_msg.replace("<users>", str(message.from_user.id))
 

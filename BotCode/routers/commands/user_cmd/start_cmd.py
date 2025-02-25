@@ -4,6 +4,9 @@
 from BotLibrary import CommandHandler
 from BotCode.keyboards import get_start_kb
 
+# Настройки экспорта в модули
+__all__ = ("start_cmd",)
+
 # Создание команды /start с несколькими медиа
 start_cmd = CommandHandler(
     name="start",
