@@ -3,7 +3,6 @@ from aiogram.types import ContentType, Message
 # Настройка экспорта из модуля
 __all__ = ("types_message",)
 
-
 # Функция определения типа сообщения
 def types_message(message: Message) -> str:
     """
