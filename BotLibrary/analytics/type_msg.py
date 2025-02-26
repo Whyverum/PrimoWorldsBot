@@ -1,5 +1,4 @@
-from aiogram.types import ContentType
-from aiogram.types import Message
+from aiogram.types import ContentType, Message
 
 # Настройка экспорта из модуля
 __all__ = ("types_message",)
@@ -73,9 +72,12 @@ def types_message(message: Message) -> str:
         ContentType.MESSAGE_AUTO_DELETE_TIMER_CHANGED: "Изменение таймера автоудаления сообщения",
     }
 
-    # Проверка для контакта (если это сообщение с контактом)
-    if message.contact:
-        return f"{content_types.get(ContentType.CONTACT, 'Контакт')}: {message.contact.phone_number}"
+    # Получение типа сообщения
+    message_type = message.content_type
 
-    # Если сообщение не соответствует ни одному из типов
-    return "Неизвестный тип"
+    # Если это контакт, добавляем номер телефона
+    if message_type == ContentType.CONTACT and message.contact:
+        return f"{content_types.get(message_type, 'Контакт')}: {message.contact.phone_number}"
+
+    # Возвращаем описание типа сообщения, если оно есть в словаре, иначе "Неизвестный тип"
+    return content_types.get(message_type, "Неизвестный тип")
