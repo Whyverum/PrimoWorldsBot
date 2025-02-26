@@ -12,16 +12,18 @@ from ProjectsFiles import BotVar
 # Настройки экспорта в модули
 __all__ = ("CommandHandler",)
 
+from SQLite3 import base_sql
+
 
 # Класс-шаблон для команд
 class CommandHandler:
     def __init__(self, name: str, keywords: list, func=None, text_msg: str = None, chat_action: bool = False,
                  description: str = "Описание команды", tg_links: bool = False,
-                 keyboard=None, prefix=BotVar.prefix, callbackdata=None, only_admin: bool = False,
+                 keyboard=None, prefix=BotVar.prefix, callbackdata: list =None, only_admin: bool = False,
                  ignore_case: bool = True, activate_keywoards: bool = True,
                  activate_commands: bool = True, activate_callback: bool = True,
                  media: str = "message", path_to_media=None, parse_mode: str = BotVar.parse_mode,
-                 disable_notification: bool = False, protect: bool = True, ):
+                 disable_notification: bool = BotVar.disable_notification, protect: bool = BotVar.protect_content, ):
 
         self.router = Router(name=f"{name}_router")
         self.name = name
@@ -65,12 +67,15 @@ class CommandHandler:
     async def handler(self, message: types.Message):
         """Основной хэндлер команды."""
         try:
-            if self.func:
-                await self.func(message)  # Вызов переданной функции, если она есть
+            if self.func:  # Проверяем, что функция не None
+                # Выполняем все функции из списка
+                for func in self.func:
+                    await func(message)
             if self.tg_links:
                 self.text_msg = self.text_msg.replace("<users>", str(message.from_user.id))
 
             Logs.info(log_type=self.log_type, user=username(message), text=f"использовал(а) команду /{self.name}")
+            await base_sql(message)
 
             if self.media == "message":
                 await message.reply(
