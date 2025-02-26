@@ -28,7 +28,7 @@ class BotLogs:
     debug_text : str = (
         "<cyan>{time:YYYY-MM-DD HH:mm:ss}</cyan> <red>|</red> "
         "<magenta>{extra[system]}-{extra[log_type]}</magenta> <red>|</red> "
-        "<yellow>{extra[user]} |</yellow> <level>{message}</level>"
+        "<yellow>{extra[user]}</yellow> <red>|</red> <level>{message}</level>"
     )
 
     # Шаблон логов для информации
