@@ -3,3 +3,4 @@
 
 # Экспортирование модулей во внешние слои проекта
 from .type_msg import *
+from .type_chat import *

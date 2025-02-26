@@ -4,6 +4,7 @@
 from aiogram import Router
 from .commands import router as commands_head_router
 from .common import router as common_head_router
+from .handlers import router as handlers_head_router
 
 # Объявление главного роутера и настройка экспорта модулей
 __all__ = ("router",)
@@ -12,6 +13,7 @@ router = Router(name="all_routers")
 
 # Список подключаемых роутеров сверху-вниз
 router.include_routers(
+handlers_head_router,
     commands_head_router,
 )
 
