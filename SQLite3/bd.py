@@ -1,11 +1,8 @@
-# SQLite3/bd.py
-# Файл для работы с базой данных пользователей бота
-
 import sqlite3
 from aiogram import types
 from datetime import datetime, timedelta, timezone
 
-from BotLibrary import username, types_message
+from BotLibrary import username as get_username, types_message
 from ProjectsFiles import Permissions
 
 bd_names: str = 'SQLite3/bd.db'
@@ -72,7 +69,7 @@ async def add_user(tg_id: int, username: str, first_name: str,
 
 # Функция обновления пользователя
 async def update_user(tg_id: int, username: str = None, first_name: str = None, last_name: str = None,
-                      bd_name: str = bd_names, status: str = None, role: str = None):
+                      bd_name: str = bd_names, role: str = None):
     updates = []
     params = []
 
@@ -85,9 +82,6 @@ async def update_user(tg_id: int, username: str = None, first_name: str = None, 
     if last_name:
         updates.append("last_name = ?")
         params.append(last_name)
-    if status:
-        updates.append("status = ?")
-        params.append(status)
     if role:
         updates.append("role = ?")
         params.append(role)
@@ -159,7 +153,7 @@ async def update_user_messages(tg_id: int, message: types.Message, bd_name: str 
 # Основная обработка SQL
 async def base_sql(message: types.Message):
     tg_id = message.from_user.id
-    usernames = username(message)
+    usernames = get_username(message)  # Изменено на get_username, чтобы избежать конфликта с переменной
     first_name = message.from_user.first_name
     last_name = message.from_user.last_name
 
