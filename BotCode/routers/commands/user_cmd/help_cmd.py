@@ -12,7 +12,6 @@ help_cmd = CommandHandler(
     name="help",
     description="Получить помощь",
     keywords=["help", "info", "помощь", "инфо", "информация", "рудз", "штащ", "byaj", "gjvjom", "byajhvfwbz"],
-    callbackdata="keywords",
-    keyboard=get_help_kb,
+    keyboard=get_help_kb, callbackdata=["keywords"],
     text_msg="Привет! Это команда помощи. Тут ты можешь узнать, как пользоваться ботом.",
 )
