@@ -20,6 +20,8 @@
       <sourceFolder url="file://$MODULE_DIR$/Test/old_files" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/GUI" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/BotCode/routers" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BotCode/routers/commands" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BotCode/routers/common" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BotCode/utils" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
