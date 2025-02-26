@@ -16,9 +16,15 @@ async def setup_logger() -> None:
     """
     logger.remove()  # Удаляем все логгеры
 
-    if BotLogs.permission or BotLogs.permission_to_file:
+    if BotLogs.permission and BotLogs.permission_to_file:
         # Добавляем новый уровень START
         logger.level("START", no=25, color="white", icon="🔸")
+    if BotLogs.permission and BotLogs.permission_new_user:
+        # Добавляем новый уровень NEW_USER
+        logger.level("NEW_USER", no=4, color="white", icon="👋")
+    if BotLogs.permission and BotLogs.permission_leave_user:
+        # Добавляем новый уровень LEAVE_USER
+        logger.level("LEAVE_USER", no=3, color="white", icon="🫰")
 
     # Настройка логирования в консоль для каждого уровня
     if BotLogs.permission:
