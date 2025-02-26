@@ -12,10 +12,7 @@ start_cmd = CommandHandler(
     name="start",
     description="Добро пожаловать!",
     keywords=["start", "старт", "cnfhn", "ыефке", "пуск", "gecr", "on"],
-    keyboard=get_start_kb,
-    media="photo",
-    path_to_media=[
-        "ProjectsFiles/media/Banners/start_banner.jpg",
-    ],
+    keyboard=get_start_kb, callbackdata=["keywords"],
+    media="photo", path_to_media=["ProjectsFiles/media/Banners/start_banner.jpg",],
     text_msg="Привет! Вот группа фото!",
 )
