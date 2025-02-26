@@ -19,11 +19,14 @@ async def logger_msg(message: Message, log_type: str = "Message") -> None:
     """
     # Получаем username или id пользователя
     user: str = f"@{message.from_user.username or message.from_user.id}"
+    msg_type = types_message(message)
 
     # Логирование только если разрешено
     if BotLogs.permission:
         # Проверка на наличие текста и его типа
-        if message.text is None:
-            Logs.info(log_type=log_type, user=user, text=f"Получено сообщение из ({message.chat.id}) : {types_message(message)}")
-        else:
+        if message.text is None and msg_type not in ("Новые участники чата", "Ушедший участник чата"):
+            Logs.info(log_type=log_type, user=user, text=f"Получено сообщение из ({message.chat.id}) : {msg_type}")
+        elif message.text is not None:
             Logs.info(log_type=log_type, user=user, text=f"Получено сообщение из ({message.chat.id}) : {message.text}")
+        else:
+            return
