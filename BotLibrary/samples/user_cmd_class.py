@@ -19,11 +19,11 @@ from SQLite3 import base_sql
 class CommandHandler:
     def __init__(self, name: str, keywords: list, func=None, text_msg: str = None, chat_action: bool = False,
                  description: str = "Описание команды", tg_links: bool = False,
-                 keyboard=None, prefix=BotVar.prefix, callbackdata: list =None, only_admin: bool = False,
+                 keyboard=None, prefix=BotVar.prefix, callbackdata: list = None, only_admin: bool = False,
                  ignore_case: bool = True, activate_keywoards: bool = True,
                  activate_commands: bool = True, activate_callback: bool = True,
                  media: str = "message", path_to_media=None, parse_mode: str = BotVar.parse_mode,
-                 disable_notification: bool = BotVar.disable_notification, protect: bool = BotVar.protect_content, ):
+                 disable_notification: bool = BotVar.disable_notification, protect: bool = BotVar.protect_content):
 
         self.router = Router(name=f"{name}_router")
         self.name = name
@@ -61,8 +61,8 @@ class CommandHandler:
             self.router.message(Command(*keywords, prefix=prefix, ignore_case=ignore_case))(self.handler)
         if activate_keywoards:
             self.router.message(F.text.lower().in_(keywords))(self.handler)
-        if activate_callback:
-            self.router.message(F.text.lower().in_(callbackdata))(self.handler)
+        if activate_callback and self.callbackdata:
+            self.router.message(F.text.lower().in_(self.callbackdata))(self.handler)
 
     async def handler(self, message: types.Message):
         """Основной хэндлер команды."""
@@ -71,15 +71,23 @@ class CommandHandler:
                 # Выполняем все функции из списка
                 for func in self.func:
                     await func(message)
+
+            # Получаем текст сообщения
+            if callable(self.text_msg):
+                text = self.text_msg()
+            else:
+                text = self.text_msg
+
+            # Обрабатываем tg_links
             if self.tg_links:
-                self.text_msg = self.text_msg.replace("<users>", str(message.from_user.id))
+                text = text.replace("<users>", str(message.from_user.id))
 
             Logs.info(log_type=self.log_type, user=username(message), text=f"использовал(а) команду /{self.name}")
             await base_sql(message)
 
             if self.media == "message":
                 await message.reply(
-                    text=self.text_msg,
+                    text=text,
                     reply_markup=self.keyboard() if self.keyboard else None,
                     parse_mode=self.parse_mode,
                     disable_notification=self.disable_notification,
@@ -101,7 +109,7 @@ class CommandHandler:
                         media_group.append(InputMediaPhoto(media=types.FSInputFile(path=media_path)))
 
                 # Добавляем подпись и клавиатуру к последнему элементу
-                media_group[-1].caption = self.text_msg
+                media_group[-1].caption = text
                 media_group[-1].parse_mode = self.parse_mode
 
                 await message.reply_media_group(
@@ -132,7 +140,7 @@ class CommandHandler:
                         media_group.append(InputMediaVideo(media=types.FSInputFile(path=media_path)))
 
                 # Добавляем подпись и клавиатуру к последнему элементу
-                media_group[-1].caption = self.text_msg
+                media_group[-1].caption = text
                 media_group[-1].parse_mode = self.parse_mode
 
                 await message.reply_media_group(
@@ -163,7 +171,7 @@ class CommandHandler:
                         media_group.append(InputMediaDocument(media=types.FSInputFile(path=media_path)))
 
                 # Добавляем подпись и клавиатуру к последнему элементу
-                media_group[-1].caption = self.text_msg
+                media_group[-1].caption = text
                 media_group[-1].parse_mode = self.parse_mode
 
                 await message.reply_media_group(
@@ -193,7 +201,7 @@ class CommandHandler:
                         if url:
                             await message.reply_photo(
                                 photo=media_path,
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -202,7 +210,7 @@ class CommandHandler:
                         else:
                             await message.reply_photo(
                                 photo=types.FSInputFile(path=media_path),
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -211,14 +219,14 @@ class CommandHandler:
                         if self.chat_action and is_last:
                             await message.bot.send_chat_action(
                                 chat_id=message.chat.id,
-                                action=ChatAction.UPLOAD_PHOTO,
+                               action=ChatAction.UPLOAD_PHOTO,
                             )
 
                     elif self.media == "gif":
                         if url:
                             await message.reply_animation(
                                 animation=media_path,
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -227,7 +235,7 @@ class CommandHandler:
                         else:
                             await message.reply_animation(
                                 animation=types.FSInputFile(path=media_path),
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -243,7 +251,7 @@ class CommandHandler:
                         if url:
                             await message.reply_video(
                                 video=media_path,
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -252,7 +260,7 @@ class CommandHandler:
                         else:
                             await message.reply_video(
                                 video=types.FSInputFile(path=media_path),
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -268,7 +276,7 @@ class CommandHandler:
                         if url:
                             await message.reply_video_note(
                                 video_note=media_path,
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -277,7 +285,7 @@ class CommandHandler:
                         else:
                             await message.reply_video_note(
                                 video_note=types.FSInputFile(path=media_path),
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -293,7 +301,7 @@ class CommandHandler:
                         if url:
                             await message.reply_audio(
                                 audio=media_path,
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -302,7 +310,7 @@ class CommandHandler:
                         else:
                             await message.reply_audio(
                                 audio=types.FSInputFile(path=media_path),
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -318,7 +326,7 @@ class CommandHandler:
                         if url:
                             await message.reply_document(
                                 document=media_path,
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -327,7 +335,7 @@ class CommandHandler:
                         else:
                             await message.reply_document(
                                 document=types.FSInputFile(path=media_path),
-                                caption=self.text_msg if is_last else None,
+                                caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
                                 disable_notification=self.disable_notification,
@@ -342,13 +350,12 @@ class CommandHandler:
                     elif self.media == "dice":
                         await message.reply_dice(
                             emoji="🎲",  # Эмодзи кубика как стандартное значение, если нет URL
-                            caption=self.text_msg if is_last else None,
+                            caption=text if is_last else None,
                             reply_markup=self.keyboard() if is_last and self.keyboard else None,
                             parse_mode=self.parse_mode,
                             disable_notification=self.disable_notification,
                             protect_content=self.protect,
                         )
-
                         if self.chat_action and is_last:
                             await message.bot.send_chat_action(
                                 chat_id=message.chat.id,
