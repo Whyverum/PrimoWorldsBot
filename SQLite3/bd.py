@@ -1,3 +1,6 @@
+# SQLite3/bd.py
+# Работа с базами данных
+
 import sqlite3
 from aiogram import types
 from datetime import datetime, timedelta, timezone
@@ -27,7 +30,7 @@ async def create_user_db(bd_name: str = bd_names):
             user_id INTEGER PRIMARY KEY,  -- Уникальный ключ
             last_message TEXT,
             last_message_id INTEGER,
-            last_message_time TEXT,
+            last_message_time TEXT,  -- Убедитесь, что это поле существует
             messages_per_day INTEGER DEFAULT 0,
             messages_per_week INTEGER DEFAULT 0,
             messages_per_month INTEGER DEFAULT 0,
@@ -159,7 +162,7 @@ async def base_sql(message: types.Message):
 
     if Permissions.sql_user:
         await add_user(tg_id, usernames, first_name, last_name, role="active", status="user")
-        await update_user(tg_id=tg_id, first_name=first_name, last_name=last_name, status="user")
+        await update_user(tg_id=tg_id, first_name=first_name, last_name=last_name)
         await update_user_messages(tg_id, message)
 
 # Функция для получения данных о пользователе
