@@ -4,6 +4,7 @@
 import asyncio
 from BotLibrary import *
 from BotCode import router as main_router
+from SQLite3 import create_user_db
 
 
 # Запуск основного кода
@@ -13,6 +14,9 @@ async def main():
     await bot_get_info()
     Logs.start(text=f"Начало запуска бота @{BotInfo.username}...")
     bot_info_out()
+
+    # Автоматическое создание базы данных при отсутствии
+    await create_user_db()
 
     # Создание пустых директорий
     await setup_directories()
