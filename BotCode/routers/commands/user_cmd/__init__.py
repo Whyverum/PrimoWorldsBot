@@ -4,6 +4,7 @@
 # Экспортирование модулей во внешние слои проекта
 from aiogram import Router
 from .start_cmd import start_cmd
+from .start_time_cmd import start_time_cmd
 from .help_cmd import help_cmd
 
 # Объявление роутера и настройка экспорта модулей
@@ -14,6 +15,7 @@ router = Router(name="user_cmd_router")
 # Список подключаемых роутеров сверху-вниз
 router.include_routers(
     help_cmd.router,
+    start_time_cmd.router,
 )
 
 router.include_routers(start_cmd.router)
