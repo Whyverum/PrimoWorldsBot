@@ -178,3 +178,7 @@ cython_debug/
 # JetBrains поддерживает отдельный шаблон JetBrains.gitignore,
 # который можно найти здесь: https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore.
 .idea/
+
+# Отключение сессий
+*.session
+*.session-journal
