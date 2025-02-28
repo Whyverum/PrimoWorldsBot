@@ -6,6 +6,7 @@ from aiogram import Router
 from .start_cmd import start_cmd
 from .start_time_cmd import start_time_cmd
 from .help_cmd import help_cmd
+from .weather_cmd import weather_cmd
 
 # Объявление роутера и настройка экспорта модулей
 __all__ = ("router",)
@@ -16,6 +17,7 @@ router = Router(name="user_cmd_router")
 router.include_routers(
     help_cmd.router,
     start_time_cmd.router,
+    weather_cmd.router,
 )
 
 router.include_routers(start_cmd.router)

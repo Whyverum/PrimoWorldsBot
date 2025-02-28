@@ -15,6 +15,7 @@ bot2_token = getenv("BOT2_TOKEN")
 # Ключи от API
 api_key = getenv("API_KEY")
 web_api_key = getenv("WEB_API_KEY")
+weather_api_key = getenv("WEATHER_API")
 
 # Хранилище сессии телеграмма
 tg_api_uid = getenv("TG_API_UID")
