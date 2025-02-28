@@ -61,6 +61,7 @@ class BotVar:
     encod: str = "utf-8"
     language: str = "Python3-Aiogram"
     time_format: str = "%Y-%m-%d %H:%M:%S"
+    bd_names: str = 'SQLite3/bd.db'
     prefix: Tuple[str, ...] = ('$', '!', '.', '%', '&', ':', '|', '+', '-', '/', '~', '?')
 
     parse_mode: str = "HTML"  # Устанавливаем формат HTML для всех сообщений
