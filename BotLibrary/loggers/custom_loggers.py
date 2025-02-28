@@ -14,14 +14,14 @@ class Logs:
 
     @staticmethod
     def start(text: str = "Логирование!", system: str = "PRIMO",
-              log_type: str = "AEP", user: str = "@Console", message: Message = None) -> None:
+              log_type: str = "AEP", user: str = "@Console") -> None:
         """
         Логирует сообщение на уровне DEBUG.
 
+        :param system:
         :param text: Сообщение для логирования.
         :param log_type: Тип лога (например, "Logs").
         :param user: Имя пользователя или источник вызова лога.
-        :param message: Сообщение от пользователя, если необходимо извлечь имя.
         """
         logger.bind(system=system, user=user, log_type=log_type).log("START", text)
 
@@ -31,6 +31,7 @@ class Logs:
         """
         Логирует сообщение на уровне DEBUG.
 
+        :param system:
         :param text: Сообщение для логирования.
         :param log_type: Тип лога (например, "Logs").
         :param user: Имя пользователя или источник вызова лога.
@@ -46,6 +47,7 @@ class Logs:
         """
         Логирует сообщение на уровне INFO.
 
+        :param system:
         :param text: Сообщение для логирования.
         :param log_type: Тип лога (например, "Logs").
         :param user: Имя пользователя или источник вызова лога.
@@ -61,6 +63,7 @@ class Logs:
         """
         Логирует сообщение на уровне WARNING.
 
+        :param system:
         :param text: Сообщение для логирования.
         :param log_type: Тип лога (например, "Logs").
         :param user: Имя пользователя или источник вызова лога.
@@ -76,6 +79,7 @@ class Logs:
         """
         Логирует сообщение на уровне ERROR.
 
+        :param system:
         :param text: Сообщение для логирования.
         :param log_type: Тип лога (например, "Logs").
         :param user: Имя пользователя или источник вызова лога.
