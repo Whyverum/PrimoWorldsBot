@@ -1,30 +1,28 @@
 # BotCode/routers/commands/user_cmd_class.py
 # Класс-шаблон для создания новых команд
 
+import inspect
 from aiogram import Router, types, F
 from aiogram.enums import ChatAction
 from aiogram.filters import Command
 from aiogram.types import InputMediaPhoto, InputMediaVideo, InputMediaDocument
+from typing import Optional, Callable
 
 from BotLibrary import Logs, valid_url, username
 from ProjectsFiles import BotVar
+from SQLite3 import base_sql
 
 # Настройки экспорта в модули
 __all__ = ("CommandHandler",)
 
-from SQLite3 import base_sql
-
-
-# Класс-шаблон для команд
 class CommandHandler:
-    def __init__(self, name: str, keywords: list, func=None, text_msg: str = None, chat_action: bool = False,
+    def __init__(self, name: str, keywords: list, func: Optional[list[Callable]] = None, text_msg=None, chat_action: bool = False,
                  description: str = "Описание команды", tg_links: bool = False,
                  keyboard=None, prefix=BotVar.prefix, callbackdata: list = None, only_admin: bool = False,
                  ignore_case: bool = True, activate_keywoards: bool = True,
                  activate_commands: bool = True, activate_callback: bool = True,
                  media: str = "message", path_to_media=None, parse_mode: str = BotVar.parse_mode,
                  disable_notification: bool = BotVar.disable_notification, protect: bool = BotVar.protect_content):
-
         self.router = Router(name=f"{name}_router")
         self.name = name
         self.log_type = name.capitalize()
@@ -67,12 +65,34 @@ class CommandHandler:
     async def handler(self, message: types.Message):
         """Основной хэндлер команды."""
         try:
-            if self.func:  # Проверяем, что функция не None
-                # Выполняем все функции из списка
-                for func in self.func:
-                    await func(message)
+            # Извлекаем текст после команды
+            command_text = message.text[len(message.text.split()[0]):].strip()  # Убираем команду из текста
+            args = command_text.split()  # Разделяем команду на аргументы
 
-            # Получаем текст сообщения
+            # Проверка на выполнение дополнительной функции (если она есть)
+            if self.func:  # Проверяем, что функция не None
+                # Выполняем все функции из списка, передавая команду
+                for func_item in self.func:
+                    # Используем inspect для получения информации о функции
+                    if callable(func_item):
+                        signature = inspect.signature(func_item)
+                        # Если функция ожидает аргументы
+                        if len(signature.parameters) > 0:
+                            await func_item(message, *args)  # Передаем аргументы функции
+                        else:
+                            await func_item(message)  # Если функция не требует аргументов, просто вызываем её
+
+            # Обрабатываем текстовое сообщение
+            if callable(self.text_msg):
+                text = self.text_msg()
+            else:
+                text = self.text_msg
+
+            # Обрабатываем tg_links
+            if self.tg_links:
+                text = text.replace("<users>", str(message.from_user.id))
+
+            # Обрабатываем текстовое сообщение
             if callable(self.text_msg):
                 text = self.text_msg()
             else:
@@ -84,6 +104,16 @@ class CommandHandler:
 
             Logs.info(log_type=self.log_type, user=username(message), text=f"использовал(а) команду /{self.name}")
             await base_sql(message)
+
+            # Обрабатываем текстовое сообщение
+            if callable(self.text_msg):
+                text = self.text_msg()
+            else:
+                text = self.text_msg
+
+            # Обрабатываем tg_links
+            if self.tg_links:
+                text = text.replace("<users>", str(message.from_user.id))
 
             if self.media == "message":
                 await message.reply(
@@ -219,7 +249,7 @@ class CommandHandler:
                         if self.chat_action and is_last:
                             await message.bot.send_chat_action(
                                 chat_id=message.chat.id,
-                               action=ChatAction.UPLOAD_PHOTO,
+                                action=ChatAction.UPLOAD_PHOTO,
                             )
 
                     elif self.media == "gif":
