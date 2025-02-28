@@ -3,7 +3,7 @@
 
 from aiogram import Router, types
 from BotLibrary import *
-from SQLite3.bd import base_sql
+from SQLite3 import base_sql
 
 # Настройка экспорта модулей и роутера
 __all__ = ("router",)
