@@ -20,6 +20,6 @@ async def base_sql(message: types.Message):
     last_name = message.from_user.last_name
 
     if Permissions.sql_user:
-        await add_user(tg_id, usernames, first_name, last_name, role="active", status="user")
+        await add_user(tg_id, usernames, first_name, last_name, role="", status="active", user="user")
         await update_user(tg_id=tg_id, first_name=first_name, last_name=last_name)
-        await update_user_messages(tg_id, message)
+        await update_user_messages(message=message)

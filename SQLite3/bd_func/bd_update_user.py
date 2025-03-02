@@ -10,7 +10,7 @@ __all__ = ("update_user",)
 
 # Функция обновления пользователя
 async def update_user(tg_id: int, username: str = None, first_name: str = None, last_name: str = None,
-                      bd_name: str = BotVar.bd_names, role: str = None):
+                      bd_name: str = BotVar.bd_names, role: str = None, user: str = None):
     updates = []
     params = []
 
@@ -26,6 +26,9 @@ async def update_user(tg_id: int, username: str = None, first_name: str = None, 
     if role:
         updates.append("role = ?")
         params.append(role)
+    if user:
+        updates.append("user = ?")
+        params.append(user)
 
     if updates:
         query = f"UPDATE users SET {', '.join(updates)} WHERE tg_id = ?"

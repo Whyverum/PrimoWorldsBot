@@ -9,8 +9,8 @@ __all__ = ("add_user",)
 
 
 # Функция добавления пользователя с последовательным user_id
-async def add_user(tg_id: int, username: str, first_name: str,
-                   last_name: str, role: str, status: str, bd_name: str = BotVar.bd_names):
+async def add_user(tg_id: int, username: str, first_name: str, last_name: str,
+                   role: str, status: str, user: str, bd_name: str = BotVar.bd_names):
     with sqlite3.connect(bd_name) as db:
         cursor = db.cursor()
 
@@ -26,9 +26,9 @@ async def add_user(tg_id: int, username: str, first_name: str,
 
         # Добавляем нового пользователя
         cursor.execute('''
-        INSERT INTO users (user_id, tg_id, username, first_name, last_name, role, status)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (new_user_id, tg_id, username, first_name, last_name, role, status))
+        INSERT INTO users (user_id, tg_id, username, first_name, last_name, role, status, user)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (new_user_id, tg_id, username, first_name, last_name, role, status, user))
 
         # Добавляем запись в user_messages
         cursor.execute('''
