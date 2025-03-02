@@ -4,7 +4,7 @@
 import re
 
 # Настройка экспорта из этого модуля
-__all__ = ("valid_url",)
+__all__ = ("valid_url", "url_to_text")
 
 
 # Функция определения является ли строка ссылкой
@@ -22,3 +22,8 @@ def valid_url(url: str) -> bool:
         r'(/[-a-zA-Z0-9@:%_+.~#?&//=]*)?$'  # Путь, параметры и фрагменты
     )
     return bool(url_pattern.match(url))
+
+
+# Функция, что дает тексту ссылку на HTML
+def url_to_text(text: str = "Тест", url: str = "www.google.com") -> str:
+    return f'<b><a href="{url}">{text}</a></b>'
