@@ -8,6 +8,9 @@ from BotLibrary import bot
 # Настройка экспорта в модули
 router = Router(name="reklama_inline_router")
 image_url = "https://cdn.tripster.ru/photos/0bc3afa7-3847-4b47-aaf1-60202f48fb2a.jpg"  # URL изображения
+text_msg = \
+f"""Это сообщение с изображением и инлайн кнопками!
+""" + "#флуд #ролевая #геншинимпакт #геншин #flood #rp #genshin"
 
 @router.callback_query(lambda c: c.data == 'button_1')
 async def process_callback_button(callback_query: types.CallbackQuery):
@@ -30,7 +33,7 @@ async def inline_echo(inline_query: types.InlineQuery):
                 id=result_id,
                 photo_url=image_url,  # URL изображения
                 thumbnail_url=image_url,  # Миниатюра изображения
-                caption="Это сообщение с изображением и инлайн кнопками!",  # Текст, который будет показываться под изображением
+                caption=text_msg,  # Текст, который будет показываться под изображением
                 reply_markup=types.InlineKeyboardMarkup(
                     inline_keyboard=[
                         [types.InlineKeyboardButton(text="Посмотреть инфо-канал", url="https://t.me/adeptusfiziks")],
