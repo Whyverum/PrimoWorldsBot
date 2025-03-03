@@ -12,7 +12,7 @@
       <sourceFolder url="file://$MODULE_DIR$/BotLibrary/system" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BotLibrary/timer" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BotLibrary/validators" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/SQLite3" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/SQLite3" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BotCode" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/BotLibrary/samples" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Test" isTestSource="true" />

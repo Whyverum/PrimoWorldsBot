@@ -3,7 +3,7 @@
 import sqlite3
 from aiogram import types
 
-from BotLibrary import CommandHandler, username_to_text
+from BotLibrary import CommandHandler, username_to_text, bot
 from ProjectsFiles import BotVar
 
 # Настройки экспорта в модули

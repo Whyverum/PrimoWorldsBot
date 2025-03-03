@@ -10,6 +10,7 @@ from .bd_get_user import *
 from .bd_update_user import *
 from .bd_update_user_msg import *
 from .bd_user_create import *
+from .status_user import *
 
 
 # Основная обработка SQL
