@@ -1,6 +1,6 @@
 # BotCode/routers/commands/user_cmd/start_time_cmd.py
+#
 
-from aiogram import types
 from BotLibrary import CommandHandler
 from BotCode.utils import get_weather
 
