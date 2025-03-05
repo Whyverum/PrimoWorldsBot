@@ -1,6 +1,8 @@
 import aiohttp
 from ProjectsFiles import weather_api_key
 
+# Настройки экспорта в модули
+__all__ = ("get_weather",)
 
 async def get_weather(message, *args) -> str:
     # Извлекаем город из сообщения
