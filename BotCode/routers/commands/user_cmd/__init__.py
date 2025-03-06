@@ -8,6 +8,7 @@ from .start_time_cmd import start_time_cmd
 from .help_cmd import help_cmd
 from .weather_cmd import weather_cmd
 from .stats import stats_cmd
+from .my_cmd import my_cmd
 
 # Объявление роутера и настройка экспорта модулей
 __all__ = ("router",)
@@ -20,6 +21,7 @@ router.include_routers(
     start_time_cmd.router,
     weather_cmd.router,
     stats_cmd.router,
+    my_cmd.router,
 )
 
 router.include_routers(start_cmd.router)
