@@ -5,7 +5,7 @@ from aiogram import Dispatcher, Bot, F
 from aiogram.client.default import DefaultBotProperties
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 
-from ..timer import get_host_time, get_moscow_time
+from ..timer import get_host_time, get_city_time
 from ProjectsFiles import bot_token, BotVar
 
 
@@ -16,7 +16,7 @@ ikb = InlineKeyboardBuilder()
 # Настройка параметров диспатчера
 dp = Dispatcher()
 dp["started_at"] = get_host_time()
-dp["started_at_msk"] = get_moscow_time()
+dp["started_at_msk"] = get_city_time()
 dp["is_active"] = True  # Флаг активности бота
 dp["logs"] = []
 dp["users"] = {}

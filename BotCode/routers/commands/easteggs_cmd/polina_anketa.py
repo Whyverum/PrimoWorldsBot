@@ -33,7 +33,7 @@ polina_za_tri_eleksira_cmd = CommandHandler(
     name="polina_za_tri_eleksira",
     description="Получение личной анкеты Поляка",
     keywords=["polina_za_tri_eleksira"],
-    keyboard=get_my_inline_kb, callbackdata=["keywords"],
+    keyboard=get_my_inline_kb,
     media="photo", path_to_media=["ProjectsFiles/media/Anketa/polina_easteggs_anketa.jpeg"],
     text_msg=shablon_anketa,
     parse_mode="MarkdownV2",

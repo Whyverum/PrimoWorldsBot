@@ -6,6 +6,7 @@ from aiogram.types import Message
 # Настройка экспорта из модуля
 __all__ = ("username", "username_to_text")
 
+
 # Функция получения юзера или ID пользователя
 def username(message: Message) -> str:
     """
@@ -13,12 +14,32 @@ def username(message: Message) -> str:
 
     :param message: Объект сообщения из aiogram.
     :return: Строка с юзернеймом пользователя или его ID.
+    :raises ValueError: Если в сообщении отсутствует информация о пользователе.
     """
-    if message.from_user:
-        return f"@{message.from_user.username}" if message.from_user.username else f"@{message.from_user.id}"
-    return "@Unknown_User"  # Если from_user отсутствует
+    try:
+        if message.from_user:
+            return f"@{message.from_user.username}" if message.from_user.username else f"@{message.from_user.id}"
+        raise ValueError("Информация о пользователе отсутствует в сообщении.")
+
+    except ValueError as e:
+        # Логируем ошибку с использованием Logs.error
+        raise e  # Перебрасываем ошибку выше для дальнейшей обработки
 
 
 # Функция получение имени пользователя + ссылка на него
 def username_to_text(message: Message) -> str:
-    return f'<b><a href="tg://user?id={message.from_user.id}">{message.from_user.full_name}</a></b>'
+    """
+    Преобразует информацию о пользователе в строку с HTML-ссылкой.
+
+    :param message: Объект сообщения из aiogram.
+    :return: Строка с HTML-кодом для ссылки на пользователя.
+    :raises ValueError: Если в сообщении отсутствует информация о пользователе.
+    """
+    try:
+        if message.from_user:
+            return f'<b><a href="tg://user?id={message.from_user.id}">{message.from_user.full_name}</a></b>'
+        raise ValueError("Информация о пользователе отсутствует в сообщении.")
+
+    except ValueError as e:
+        # Логируем ошибку с использованием Logs.error
+        raise e  # Перебрасываем ошибку выше для дальнейшей обработки

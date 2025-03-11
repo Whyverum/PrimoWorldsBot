@@ -1,33 +1,22 @@
-# BotLibrary/system/edit_bot.py
-# Библиотека установки настроек бота через проект и конфиги
+# BotLibrary/system/bot_edit.py
+# Под-пакет установки настроек бота
 
 from aiogram.types import ChatAdministratorRights
 from ProjectsFiles import BotEdit
 from .bots import bot
-from ..loggers import Logs
 
 # Настройка логирования
 log_type = "Edit"
 
-# Функция для выполнения всех настроек, если они не совпадают
-async def set_all() -> None:
-    """
-    Выполняет все необходимые настройки бота, если они не совпадают с текущими значениями.
-
-    :return: None
-    """
-    await set_adm_rights()
-    await set_bot_name()
-    await set_bot_description()
-    await set_bot_short_description()
-
+# Настройка экспорта из модуля
+__all__ = ("set_adm_rights", "set_bot_name", "set_bot_description", "set_bot_short_description")
 
 # Функция установки прав администратора
 async def set_adm_rights() -> None:
     """
     Устанавливает права администратора для бота, если они отличаются от текущих.
 
-    :return: None
+    :return: Изменение прав администратора
     """
     rights = ChatAdministratorRights(
         is_anonymous=BotEdit.is_anonymous,
@@ -54,57 +43,72 @@ async def set_adm_rights() -> None:
 
 
 # Функция установки имени бота с проверкой на ограничения
-async def set_bot_name() -> None:
+async def set_bot_name(new_name: str = BotEdit.name) -> None:
     """
     Устанавливает имя бота, если оно отличается от текущего и соответствует ограничениям.
 
-    :return: None
+    :param new_name: Новое имя бота (config)
+    :return: Имя бота
     """
+    # Импортируем Logs внутри функции, чтобы избежать циклического импорта
+    from ..loggers.custom_loggers import Logs
+
     # Получаем текущее имя бота
     current_name = (await bot.get_me()).first_name
 
     # Проверка длины имени
-    if len(BotEdit.name) < 1 or len(BotEdit.name) > 32:
+    if len(new_name) < 1 or len(new_name) > 32:
         Logs.error(log_type=log_type, user="NAME_BOT", text="Имя бота должно быть от 1 до 32 символов.")
+        return  # Выходим из функции, если имя некорректно
 
     # Проверяем, совпадает ли текущее имя с тем, которое мы хотим установить
-    if current_name != BotEdit.name:
-        await bot.set_my_name(BotEdit.name)
+    if current_name != new_name:
+        await bot.set_my_name(new_name)
 
 
 # Функция установки описания бота с проверкой на ограничения
-async def set_bot_description() -> None:
+async def set_bot_description(new_description: str = BotEdit.description) -> None:
     """
     Устанавливает описание бота, если оно отличается от текущего и соответствует ограничениям.
 
-    :return: None
+    :param new_description: Новое описание для бота (config)
+    :return: Описание бота
     """
+    # Импортируем Logs внутри функции, чтобы избежать циклического импорта
+    from ..loggers.custom_loggers import Logs
+
     # Получаем текущее описание бота
     current_description = await bot.get_my_description()
 
     # Проверка длины описания
-    if len(BotEdit.description) > 255:
-        Logs.error(log_type=log_type, user="DISCRIPT", text="Короткое описание бота не может превышать 255 символов.")
+    if len(new_description) > 255 or len(new_description)==0:
+        Logs.error(log_type=log_type, user="DISCRIPT", text="Короткое описание бота не может превышать 255 символов или быть равно 0.")
+        return  # Выходим из функции, если описание некорректно
 
     # Проверяем, совпадает ли текущее описание с тем, которое мы хотим установить
-    if current_description != BotEdit.description:
-        await bot.set_my_description(description=BotEdit.description)
+    if current_description != new_description:
+        await bot.set_my_description(description=new_description)
 
 
 # Функция установки короткого описания бота с проверкой на ограничения
-async def set_bot_short_description() -> None:
+async def set_bot_short_description(new_short_description: str = BotEdit.short_description) -> None:
     """
     Устанавливает короткое описание бота, если оно отличается от текущего и соответствует ограничениям.
 
-    :return: None
+    :param new_short_description: Новое описание виджета для бота (config)
+    :return: Короткое описание бота
     """
+    # Импортируем Logs внутри функции, чтобы избежать циклического импорта
+    from ..loggers.custom_loggers import Logs
+
     # Получаем текущее короткое описание бота
     current_short_description = await bot.get_my_short_description()
 
     # Проверка длины короткого описания
-    if len(BotEdit.short_description) > 512:
-        Logs.error(log_type=log_type, user="SHORT_DISCRIPT", text="Описание виджета не может превышать 512 символов.")
+    if len(new_short_description) > 512 or len(new_short_description) == 0:
+        Logs.error(log_type=log_type, user="SHORT_DISCRIPT", text="Описание виджета не может превышать 512 символов или быть равно 0.")
+        return  # Выходим из функции, если короткое описание некорректно
 
     # Проверяем, совпадает ли текущее короткое описание с тем, которое мы хотим установить
-    if current_short_description != BotEdit.short_description:
-        await bot.set_my_short_description(short_description=BotEdit.short_description)
+    if current_short_description != new_short_description:
+        await bot.set_my_short_description(short_description=new_short_description)

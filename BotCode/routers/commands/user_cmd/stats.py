@@ -31,6 +31,5 @@ stats_cmd = CommandHandler(
     name="stats",
     description="Вывод статистики о пользователи",
     keywords=["stats", "ыефеы", "cnfnf", "стата", "Кто я", "Rnj z", "vjbcjj,otybz", "моисообщения"],
-    callbackdata=["keywords"],
     media="command", func=[send_stats],
 )

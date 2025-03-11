@@ -25,5 +25,27 @@ def valid_url(url: str) -> bool:
 
 
 # Функция, что дает тексту ссылку на HTML
-def url_to_text(text: str = "Тест", url: str = "www.google.com") -> str:
-    return f'<b><a href="{url}">{text}</a></b>'
+def url_to_text(text: str, url: str) -> str:
+    """
+    Преобразует текст в HTML ссылку с указанным URL.
+
+    Эта функция генерирует HTML-ссылку с переданным текстом и URL, используя тег `<а>`, и делает ссылку жирной.
+
+    :param text: Текст, который будет отображаться для ссылки.
+    :param url: URL, который будет привязан к тексту.
+    :return: Строка с HTML кодом для ссылки, если URL валиден.
+    :raises ValueError: Если URL невалиден.
+    """
+    try:
+        if not valid_url(url):  # Проверяем, является ли URL валидным
+            raise ValueError(f"Переданный URL '{url}' невалиден.")
+
+        # Генерация HTML-ссылки
+        return f'<b><a href="{url}">{text}</a></b>'
+
+    except ValueError as e:
+        # Импортируем Logs внутри функции, чтобы избежать циклического импорта
+        from ..loggers.custom_loggers import Logs
+        # Логируем ошибку с использованием Logs.error, как указано
+        Logs.error(text=f"Ошибка при создании ссылки: {e}", log_type="InvalidURL")
+        raise e  # Перебрасываем ошибку выше для дальнейшей обработки или уведомления

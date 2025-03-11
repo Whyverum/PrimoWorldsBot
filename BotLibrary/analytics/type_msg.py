@@ -1,10 +1,13 @@
+# BotLibrary/analytics/type_msg.py
+# Проверяет тип сообщения
+
 from aiogram.types import ContentType, Message
 
 # Настройка экспорта из модуля
-__all__ = ("types_message",)
+__all__ = ("type_msg",)
 
 # Функция определения типа сообщения
-def types_message(message: Message) -> str:
+def type_msg(message: Message) -> str:
     """
     Функция для определения типа сообщения на основе его содержимого.
 
@@ -68,7 +71,7 @@ def types_message(message: Message) -> str:
         ContentType.GROUP_CHAT_CREATED: "Создание группового чата",
         ContentType.SUPERGROUP_CHAT_CREATED: "Создание супергруппы",
         ContentType.CHANNEL_CHAT_CREATED: "Создание канала",
-        ContentType.MESSAGE_AUTO_DELETE_TIMER_CHANGED: "Изменение таймера автоудаления сообщения",
+        ContentType.MESSAGE_AUTO_DELETE_TIMER_CHANGED: "Изменение таймера авто-удаления сообщения",
     }
 
     # Получение типа сообщения

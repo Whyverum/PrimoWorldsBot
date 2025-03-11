@@ -17,4 +17,4 @@ router = Router(name="common_msg_router")
 async def handle_all_messages(message: types.Message):
     await base_sql(message)
     await status_user(message)
-    await logger_msg(message)  # Это твой метод для логирования
+    Logs.msg(message)

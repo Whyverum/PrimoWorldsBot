@@ -1,33 +1,45 @@
-# BotLibrary/system/logs.py
+# BotLibrary/loggers/logs.py
 # Создание логгеров и их шаблон для проекта
 
 import sys
 from loguru import logger
 from ProjectsFiles import BotLogs, ProjectPath
 
+# Настройка экспорта из модуля
+__all__ = ("setup_logger",)
 
 # Создание обычного логгера + логгер в файл
-async def setup_logger() -> None:
+async def setup_logger(logging: bool = BotLogs.permission,
+                       to_file: bool = BotLogs.permission_to_file) -> None:
     """
-    Настройка логгеров для проекта, выводящих логи в консоль.
-    Логгеры конфигурируются в зависимости от настроек в BotLogs.
+    Настройка логгеров для проекта, выводящих логи в консоль и файлы.
+    Логгеры конфигурируются в зависимости от настроек в конфигах проекта.
 
     Если разрешено логирование, добавляются логи для уровней DEBUG, INFO, WARNING, ERROR.
-    """
-    logger.remove()  # Удаляем все логгеры
+    И кастомные такие, как START, NEW_USER, LEAVE_USER
 
-    if BotLogs.permission and BotLogs.permission_to_file:
+    :param logging: Разрешение на логирование в консоль (config)
+    :param to_file: Разрешение на логирование в файл (config)
+
+    :return: Создание логеров под различные уровни
+    """
+    logger.remove()  # Удаляем все стандартные логгеры
+
+
+    # Если есть разрешение, то он создает новые уровни
+    if logging and BotLogs.permission_to_file:
         # Добавляем новый уровень START
         logger.level("START", no=25, color="white", icon="🔸")
-    if BotLogs.permission and BotLogs.permission_new_user:
+    if logging and BotLogs.permission_new_user:
         # Добавляем новый уровень NEW_USER
         logger.level("NEW_USER", no=4, color="white", icon="👋")
-    if BotLogs.permission and BotLogs.permission_leave_user:
+    if logging and BotLogs.permission_leave_user:
         # Добавляем новый уровень LEAVE_USER
         logger.level("LEAVE_USER", no=3, color="white", icon="🫰")
 
+
     # Настройка логирования в консоль для каждого уровня
-    if BotLogs.permission:
+    if logging:
         logger.add(sys.stderr,
                    colorize=True,
                    format=BotLogs.start_text,
@@ -55,8 +67,9 @@ async def setup_logger() -> None:
                    level="ERROR",
                    filter=lambda record: record["level"].name == "ERROR")
 
+
     # Добавление логгера для записи в файл
-    if BotLogs.permission_to_file:
+    if to_file:
         logger.add(ProjectPath.start_log_file,
                    rotation=BotLogs.max_size,
                    format=BotLogs.start_text,

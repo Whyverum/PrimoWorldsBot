@@ -43,6 +43,5 @@ ban_cmd = CommandHandler(
     name="ban",
     description="Блокировка пользователя",
     keywords=["ban", "бан", "banhammer", "ифтрфььук", "ифт"],
-    callbackdata=["keywords"],
     media="command", func=[ban_user],
 )

@@ -34,7 +34,7 @@ kataz_pidaraz_2020_cmd = CommandHandler(
     name="kataz_pidaraz_2020",
     description="Получение личной анкеты Катаза",
     keywords=["kataz_pidaraz_2020"],
-    keyboard=get_my_inline_kb, callbackdata=["keywords"],
+    keyboard=get_my_inline_kb,
     media="photo", path_to_media=["ProjectsFiles/media/Anketa/kataz_easteggs.jpeg"],
     text_msg=shablon_anketa,
     parse_mode="MarkdownV2",

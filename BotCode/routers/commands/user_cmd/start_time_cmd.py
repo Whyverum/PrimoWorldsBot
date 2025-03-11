@@ -12,7 +12,6 @@ start_time_cmd = CommandHandler(
     keywords=["start_time", "stime", "старт_время", "время_старта", "с_время",
               "ыефке_ешьу", "ыешьу", "cnfhn_dhtvcz", "dhtvz_cnfhnf", "c_dhtvz",
               "бот_время", "время_запуска", "бот_врем", "on_time", "щт_ешьу"],
-    callbackdata=["keywords"],
     text_msg=lambda: f"Бот @{BotInfo.username} запущен: "
                      f"\nХост: <b>{dp['started_at']}</b> "
                      f"\nМСК: <b>{dp['started_at_msk']}</b>",

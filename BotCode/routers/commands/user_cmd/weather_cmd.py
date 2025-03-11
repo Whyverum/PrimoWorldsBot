@@ -10,7 +10,6 @@ weather_cmd = CommandHandler(
     name="weather",
     description="Погода",
     keywords=["weather", "gjujlf", "цуферук", "погода"],
-    callbackdata=["keywords"],
     media="command",
     func=[get_weather],
 )

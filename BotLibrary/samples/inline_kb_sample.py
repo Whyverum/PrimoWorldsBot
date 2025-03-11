@@ -1,3 +1,6 @@
+# BotLibrary/samples/inline_kb_sample.py
+# Шаблон для создания инлайн клавиатур
+
 from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardRemove
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from typing import List, Tuple, Optional

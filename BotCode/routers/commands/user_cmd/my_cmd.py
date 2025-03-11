@@ -8,7 +8,7 @@ from BotCode.keyboards import get_my_inline_kb
 __all__ = ("my_cmd",)
 
 # Шаблон анкеты
-shablon_anketa = """
+shablon_anketa = ("""
 📜 \\| **Статистика персонажа**  
 
 👤 **Пользователь:** [Альбедо](http://t.me/verdise)  
@@ -27,15 +27,14 @@ shablon_anketa = """
 📌 **Важные события**  
 🕵 **Разведка:** Обнаружена Лаборатория X\-18  
 💀 **Смерть:** Удушение  
-
-"""
+""")
 
 # Создание команды /my с несколькими медиа
 my_cmd = CommandHandler(
     name="my",
     description="Получение личной анкеты",
     keywords=["my", "ьн", "me", "ьу"],
-    keyboard=get_my_inline_kb, callbackdata=["keywords"],
+    keyboard=get_my_inline_kb,
     media="photo", path_to_media=["ProjectsFiles/media/Anketa/albedo_anketa.png"],
     text_msg=shablon_anketa,
     parse_mode="MarkdownV2",

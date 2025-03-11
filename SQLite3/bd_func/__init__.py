@@ -2,7 +2,7 @@
 # Инициализация модуля bd_func, для функция с БД
 
 from aiogram import types
-from BotLibrary import username
+from BotLibrary.validators import username
 from ProjectsFiles import Permissions
 
 from .bd_add_user import *

@@ -1,5 +1,5 @@
 # BotCode/keyboards/reply_kb/base_reply_kb.py
-# Базовый класс для создания reply-клавиатур с расширенными возможностями и поддержкой row_width
+# Базовый класс для создания reply-клавиатур
 
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, KeyboardButtonPollType, WebAppInfo, KeyboardButtonRequestUsers, KeyboardButtonRequestChat, KeyboardButtonRequestUser
 from aiogram.utils.keyboard import ReplyKeyboardBuilder

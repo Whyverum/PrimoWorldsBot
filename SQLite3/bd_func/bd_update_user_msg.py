@@ -5,7 +5,7 @@ import sqlite3
 from aiogram import types
 from datetime import timezone, datetime, timedelta
 
-from BotLibrary import types_message
+from BotLibrary import type_msg
 from ProjectsFiles import BotVar
 
 # Настройка экспорта в модули
@@ -31,7 +31,7 @@ async def update_user_messages(message: types.Message, bd_name: str = BotVar.bd_
         current_month = now.month
         current_year = now.year
 
-        last_message = message.text or types_message(message)
+        last_message = message.text or type_msg(message)
         last_message_id = message.message_id
 
         if result:

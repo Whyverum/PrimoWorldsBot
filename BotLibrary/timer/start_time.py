@@ -7,31 +7,33 @@ from tzlocal import get_localzone
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from ProjectsFiles import BotVar
 
+# Настройка экспорта из этого модуля
+__all__ = ("scheduler", "get_city_time", "get_host_time")
+
 # Создание планировщика для работы с задачами по времени
 scheduler = AsyncIOScheduler(timezone=get_localzone().key)
 
 
-def get_moscow_time() -> str:
+# Функция получение иного времени
+def get_city_time(city: str = 'Europe/Moscow') -> str:
     """
-    Получение текущего времени по московскому времени.
+    Получение текущего времени по иному городскому времени.
 
+    :param city: Город, что будет вторым временем
     :return: Строка, представляющая время в формате, заданном в BotVar.time_format.
     """
     # Устанавливаем временную зону для Москвы
-    moscow_tz = pytz.timezone('Europe/Moscow')
-    # Получаем текущее время по московскому времени
-    moscow_time = datetime.now(moscow_tz)
+    city_tz = pytz.timezone(city)
     # Возвращаем строку с форматом времени
-    return moscow_time.strftime(BotVar.time_format)
+    return datetime.now(city_tz).strftime(BotVar.time_format)
 
 
+# Функция получение времени хоста
 def get_host_time() -> str:
     """
     Получение текущего времени хоста (локального времени).
 
     :return: Строка, представляющая локальное время в формате, заданном в BotVar.time_format.
     """
-    # Получаем текущее время на хосте
-    host_time = datetime.now()
     # Возвращаем строку с форматом времени
-    return host_time.strftime(BotVar.time_format)
+    return datetime.now().strftime(BotVar.time_format)
