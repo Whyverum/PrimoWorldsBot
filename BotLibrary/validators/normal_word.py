@@ -9,7 +9,7 @@ async def normal_words(word: str) -> str:
     Делает слово корректного вида.
 
     :param word: Слово, которое будет приводиться к виду (Тесты).
-    :return: Нормализованное слово
+    :return: Нормализованное слово, иначе вернуть слово.
     """
     try:
         return word.lower().capitalize()
