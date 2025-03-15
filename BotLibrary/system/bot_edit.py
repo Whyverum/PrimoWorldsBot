@@ -12,34 +12,67 @@ log_type = "Edit"
 __all__ = ("set_adm_rights", "set_bot_name", "set_bot_description", "set_bot_short_description")
 
 # Функция установки прав администратора
-async def set_adm_rights() -> None:
+async def set_adm_rights(anonym: bool = BotEdit.is_anonymous,
+                         manage_chat: bool = BotEdit.manage_chat,
+                         delete_msg: bool = BotEdit.delete_messages,
+                         manage_video_chats: bool = BotEdit.manage_video_chats,
+                         restrict_members: bool = BotEdit.restrict_members,
+                         promote_members: bool = BotEdit.promote_members,
+                         change_info: bool = BotEdit.change_info,
+                         invite_users: bool = BotEdit.invite_users,
+                         post_stories: bool = BotEdit.post_stories,
+                         edit_stories: bool = BotEdit.edit_stories,
+                         delete_stories: bool = BotEdit.delete_stories,
+                         post_messages: bool = BotEdit.post_messages,
+                         edit_messages: bool = BotEdit.edit_messages,
+                         pin_messages: bool = BotEdit.pin_messages,
+                         manage_topics: bool = BotEdit.manage_topics,) -> None:
     """
     Устанавливает права администратора для бота, если они отличаются от текущих.
+    Все через конфиги!!!
+
+    :param anonym: Позволяет ли боту быть анонимным.
+    :param manage_chat: Разрешение на управление чатом.
+    :param delete_msg: Разрешение на удаление сообщений.
+    :param manage_video_chats: Разрешение на управление видеочатами.
+    :param restrict_members: Разрешение на ограничение участников (мут, бан).
+    :param promote_members: Разрешение на назначение администраторов.
+    :param change_info: Разрешение на изменение информации о группе/канале.
+    :param invite_users: Разрешение на приглашение новых участников.
+    :param post_stories: Разрешение на публикацию историй.
+    :param edit_stories: Разрешение на редактирование историй.
+    :param delete_stories: Разрешение на удаление историй.
+    :param post_messages: Разрешение на публикацию сообщений (только для каналов).
+    :param edit_messages: Разрешение на редактирование сообщений (только для каналов).
+    :param pin_messages: Разрешение на закрепление сообщений.
+    :param manage_topics: Разрешение на управление темами (в супергруппах).
 
     :return: Изменение прав администратора
     """
     rights = ChatAdministratorRights(
-        is_anonymous=BotEdit.is_anonymous,
-        can_manage_chat=BotEdit.manage_chat,
-        can_delete_messages=BotEdit.delete_messages,
-        can_manage_video_chats=BotEdit.manage_video_chats,
-        can_restrict_members=BotEdit.restrict_members,
-        can_promote_members=BotEdit.promote_members,
-        can_change_info=BotEdit.change_info,
-        can_invite_users=BotEdit.invite_users,
-        can_post_stories=BotEdit.post_stories,
-        can_edit_stories=BotEdit.edit_stories,
-        can_delete_stories=BotEdit.delete_stories,
-        can_post_messages=BotEdit.post_messages,
-        can_edit_messages=BotEdit.edit_messages,
-        can_pin_messages=BotEdit.pin_messages,
-        can_manage_topics=BotEdit.manage_topics,
+        is_anonymous=anonym,
+        can_manage_chat=manage_chat,
+        can_delete_messages=delete_msg,
+        can_manage_video_chats=manage_video_chats,
+        can_restrict_members=restrict_members,
+        can_promote_members=promote_members,
+        can_change_info=change_info,
+        can_invite_users=invite_users,
+        can_post_stories=post_stories,
+        can_edit_stories=edit_stories,
+        can_delete_stories=delete_stories,
+        can_post_messages=post_messages,
+        can_edit_messages=edit_messages,
+        can_pin_messages=pin_messages,
+        can_manage_topics=manage_topics,
     )
 
     # Применяем права только в случае изменения
     current_rights = await bot.get_my_default_administrator_rights()
     if current_rights != rights:
         await bot.set_my_default_administrator_rights(rights)
+    else:
+        return
 
 
 # Функция установки имени бота с проверкой на ограничения
@@ -64,6 +97,8 @@ async def set_bot_name(new_name: str = BotEdit.name) -> None:
     # Проверяем, совпадает ли текущее имя с тем, которое мы хотим установить
     if current_name != new_name:
         await bot.set_my_name(new_name)
+    else:
+        return
 
 
 # Функция установки описания бота с проверкой на ограничения
@@ -88,6 +123,8 @@ async def set_bot_description(new_description: str = BotEdit.description) -> Non
     # Проверяем, совпадает ли текущее описание с тем, которое мы хотим установить
     if current_description != new_description:
         await bot.set_my_description(description=new_description)
+    else:
+        return
 
 
 # Функция установки короткого описания бота с проверкой на ограничения
@@ -112,3 +149,5 @@ async def set_bot_short_description(new_short_description: str = BotEdit.short_d
     # Проверяем, совпадает ли текущее короткое описание с тем, которое мы хотим установить
     if current_short_description != new_short_description:
         await bot.set_my_short_description(short_description=new_short_description)
+    else:
+        return
