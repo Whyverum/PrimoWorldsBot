@@ -1,5 +1,5 @@
 # BotCode/routers/handlers/__init__.py
-# Инициализация пакета handlers, для работы со всеми сообщениями
+# Инициализация модуля handlers, для работы со специфическими сообщениями
 
 from aiogram import Router
 from .new_member_notification import router as member_notification_router
