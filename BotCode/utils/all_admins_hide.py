@@ -10,7 +10,10 @@ __all__ = ("hidden_admins_message",)
 
 
 # Функция составления словаря администраторов
-async def hidden_admins_message(message: types.Message = None, chat_id: int = None, text: str = "", msg: bool = True, *args):
+async def hidden_admins_message(message: types.Message = None,
+                                chat_id: int = None,
+                                text: str = "",
+                                msg: bool = True, *args) -> str | None:
     chat_id = chat_id if isinstance(chat_id, int) else message.chat.id
     admins = await bot.get_chat_administrators(chat_id)
     hidden_links = "".join(

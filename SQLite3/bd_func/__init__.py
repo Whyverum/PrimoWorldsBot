@@ -14,7 +14,7 @@ from .status_user import *
 
 
 # Основная обработка SQL
-async def base_sql(message: types.Message):
+async def base_sql(message: types.Message) -> None:
     tg_id = message.from_user.id
     usernames = username(message)
     first_name = message.from_user.first_name

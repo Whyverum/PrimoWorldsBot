@@ -10,7 +10,7 @@ __all__ = ("update_user",)
 
 # Функция обновления пользователя
 async def update_user(tg_id: int, username: str = None, first_name: str = None, last_name: str = None,
-                      bd_name: str = BotVar.bd_names, role: str = None, user: str = None):
+                      bd_name: str = BotVar.bd_names, role: str = None, user: str = None) -> None:
     updates = []
     params = []
 

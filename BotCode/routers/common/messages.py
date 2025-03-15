@@ -3,18 +3,15 @@
 
 from aiogram import Router, types
 from BotLibrary import *
-from SQLite3 import base_sql
+from SQLite3 import base_sql, status_user
 
 # Настройка экспорта модулей и роутера
 __all__ = ("router",)
-
-from bd_func.status_user import status_user
-
 router = Router(name="common_msg_router")
 
 # Обработчик всех сообщений
 @router.message()
-async def handle_all_messages(message: types.Message):
+async def all_messages(message: types.Message) -> None:
     await base_sql(message)
     await status_user(message)
     Logs.msg(message)

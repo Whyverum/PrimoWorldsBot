@@ -13,7 +13,7 @@ __all__ = ("update_user_messages",)
 
 
 # Функция обновления статистики сообщений пользователя
-async def update_user_messages(message: types.Message, bd_name: str = BotVar.bd_names):
+async def update_user_messages(message: types.Message, bd_name: str = BotVar.bd_names) -> None:
     with sqlite3.connect(bd_name) as db:
         cursor = db.cursor()
         user_id = message.from_user.id  # Используем user_id напрямую

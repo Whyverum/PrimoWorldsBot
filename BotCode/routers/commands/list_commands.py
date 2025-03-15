@@ -24,7 +24,7 @@ secret_keywords = ["setcommands", "setcommand", "ыуесщььфтвы", "ыу�
 @router.message(
     #F.from_user.id.func(lambda user_id: str(user_id) in DataID.important.keys()),
                 F.text.lower().in_(secret_keywords))
-async def set_commands():
+async def set_commands() -> None:
     bot_commands = [
         types.BotCommand(command=start_cmd.name, description=start_cmd.description),
         types.BotCommand(command=help_cmd.name, description=help_cmd.description),

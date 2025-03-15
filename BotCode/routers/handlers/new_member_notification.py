@@ -15,7 +15,7 @@ router = Router(name="new_member_notification_router")
 
 # Роутер по новым участникам чата
 @router.chat_member(ChatMemberUpdatedFilter(JOIN_TRANSITION))
-async def new_member_handler(event: types.ChatMemberUpdated):
+async def new_member_handler(event: types.ChatMemberUpdated) -> None:
     chat_id = event.chat.id
     new_user = event.new_chat_member.user
 

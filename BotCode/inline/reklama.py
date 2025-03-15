@@ -12,13 +12,15 @@ text_msg = \
 f"""Это сообщение с изображением и инлайн кнопками!
 """ + "#флуд #ролевая #геншинимпакт #геншин #flood #rp #genshin"
 
+
 @router.callback_query(lambda c: c.data == 'button_1')
-async def process_callback_button(callback_query: types.CallbackQuery):
+async def process_callback_button(callback_query: types.CallbackQuery) -> None:
     await bot.answer_callback_query(callback_query.id, text="Вы нажали первую кнопку!")
     await bot.send_message(callback_query.from_user.id, "Ответ на вашу кнопку.")
 
+
 @router.inline_query()
-async def inline_echo(inline_query: types.InlineQuery):
+async def inline_echo(inline_query: types.InlineQuery) -> None:
     # Содержимое запроса
     query = inline_query.query
 

@@ -8,7 +8,7 @@ __all__ = ("admin_lists",)
 
 
 # Функция составления словаря администраторов
-async def admin_lists(chat_id: int):
+async def admin_lists(chat_id: int) -> str:
     admins = await bot.get_chat_administrators(chat_id)
     # Формируем список упоминаний администраторов
     admin_mentions = []

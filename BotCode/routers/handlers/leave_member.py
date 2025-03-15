@@ -12,7 +12,7 @@ router = Router(name="leave_member_notification_router")
 
 # Роутер по покиданию участников чата
 @router.chat_member(ChatMemberUpdatedFilter(LEAVE_TRANSITION))
-async def leave_member_handler(event: types.ChatMemberUpdated):
+async def leave_member_handler(event: types.ChatMemberUpdated) -> None:
     chat_id = event.chat.id
     leaving_user = event.old_chat_member.user
 

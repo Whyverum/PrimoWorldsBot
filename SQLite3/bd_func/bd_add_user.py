@@ -10,7 +10,7 @@ __all__ = ("add_user",)
 
 # Функция добавления пользователя с последовательным user_id
 async def add_user(tg_id: int, username: str, first_name: str, last_name: str,
-                   role: str, status: str, user: str, bd_name: str = BotVar.bd_names):
+                   role: str, status: str, user: str, bd_name: str = BotVar.bd_names) -> None:
     with sqlite3.connect(bd_name) as db:
         cursor = db.cursor()
 

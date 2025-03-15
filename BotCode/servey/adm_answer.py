@@ -13,7 +13,7 @@ class AdmAnswer(StatesGroup):
 
 # Обработчик callback-запроса (нажатие на кнопку "Ответить пользователю")
 @router.callback_query(lambda c: c.data.startswith("answer_user_"))
-async def handle_respond_button(callback_query: types.CallbackQuery, state: FSMContext):
+async def handle_respond_button(callback_query: types.CallbackQuery, state: FSMContext) -> None:
     # Извлекаем ID пользователя из callback_data
     user_id = int(callback_query.data.split("_")[2])
 
@@ -31,7 +31,7 @@ async def handle_respond_button(callback_query: types.CallbackQuery, state: FSMC
 
 # Обработчик для получения сообщения от администратора и отправки его пользователю
 @router.message(AdmAnswer.waiting_for_message)
-async def handle_admin_message(message: types.Message, state: FSMContext):
+async def handle_admin_message(message: types.Message, state: FSMContext) -> None:
     user_data = await state.get_data()
     user_id = user_data.get("user_id")
 

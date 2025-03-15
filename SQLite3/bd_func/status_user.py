@@ -6,7 +6,7 @@ from aiogram import types
 from ProjectsFiles import BotVar
 
 # Функция проверки статуса пользователя
-async def status_user(message: types.Message, bd_path: str = BotVar.bd_names):
+async def status_user(message: types.Message, bd_path: str = BotVar.bd_names) -> str:
     # Подключение к базе данных
     bd = sqlite3.connect(bd_path)
     tg_id = message.from_user.id
@@ -30,9 +30,9 @@ async def status_user(message: types.Message, bd_path: str = BotVar.bd_names):
 
     if row:
         user_type = row[0]  # предполагаем, что в столбце 'user' находится только одно значение
-        status = status_map.get(user_type, "Ошибка!")  # Получаем статус или "Ошибка!"
+        status: str = status_map.get(user_type, "Ошибка!")  # Получаем статус или "Ошибка!"
     else:
-        status = "Пользователь не найден"
+        status: str = "Пользователь не найден"
 
     # Закрываем соединение с базой данных
     bd.close()

@@ -9,7 +9,7 @@ from SQLite3 import status_user
 __all__ = ("ban_cmd",)
 
 # Функция блокировки пользователя
-async def ban_user(message: types.Message, *args, **kwargs):
+async def ban_user(message: types.Message, *args, **kwargs) -> None:
     status = await status_user(message)
     if status not in ('Пользователь', 'Забаннен'):
         # Проверка, что команда вызвана с упоминанием пользователя

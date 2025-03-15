@@ -9,7 +9,7 @@ __all__ = ("get_user",)
 
 
 # Функция для получения данных о пользователе
-async def get_user(tg_id: int, bd_name: str = BotVar.bd_names):
+async def get_user(tg_id: int, bd_name: str = BotVar.bd_names) -> None:
     with sqlite3.connect(bd_name) as db:
         cursor = db.cursor()
         cursor.execute("SELECT * FROM users WHERE tg_id = ?", (tg_id,))

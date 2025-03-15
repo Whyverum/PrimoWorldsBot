@@ -9,7 +9,7 @@ __all__ = ("create_user_db",)
 
 
 # Функция создания базы данных
-async def create_user_db(bd_name: str = BotVar.bd_names):
+async def create_user_db(bd_name: str = BotVar.bd_names) -> None:
     with sqlite3.connect(bd_name) as db:
         cursor = db.cursor()
 
