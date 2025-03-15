@@ -17,13 +17,27 @@ from SQLite3 import base_sql
 __all__ = ("CommandHandler",)
 
 class CommandHandler:
-    def __init__(self, name: str, keywords: list, func: Optional[list[Callable]] = None, text_msg=None, chat_action: bool = False,
-                 description: str = "Описание команды", tg_links: bool = False,
-                 keyboard=None, prefix=BotVar.prefix, callbackdata: list = None, only_admin: bool = False,
-                 ignore_case: bool = True, activate_keywords: bool = True, delete_msg: bool = False,
-                 activate_commands: bool = True, activate_callback: bool = True,
-                 media: str = "message", path_to_media=None, parse_mode: str = BotVar.parse_mode,
-                 disable_notification: bool = BotVar.disable_notification, protect: bool = BotVar.protect_content):
+    def __init__(self, name: str,
+                 keywords: list,
+                 func: Optional[list[Callable]] = None,
+                 text_msg=None,
+                 chat_action: bool = False,
+                 description: str = "Описание команды",
+                 tg_links: bool = False,
+                 keyboard=None,
+                 prefix=BotVar.prefix,
+                 callbackdata: list = None,
+                 only_admin: bool = False,
+                 ignore_case: bool = True,
+                 activate_keywords: bool = True,
+                 delete_msg: bool = False,
+                 activate_commands: bool = True,
+                 activate_callback: bool = True,
+                 media: str = "message",
+                 path_to_media=None,
+                 parse_mode: str = BotVar.parse_mode,
+                 disable_notification: bool = BotVar.disable_notification,
+                 protect: bool = BotVar.protect_content):
         self.router = Router(name=f"{name}_router")
         self.name = name
         self.log_type = name.capitalize()
@@ -344,7 +358,7 @@ class CommandHandler:
                                 caption=text if is_last else None,
                                 reply_markup=self.keyboard() if is_last and self.keyboard else None,
                                 parse_mode=self.parse_mode,
-                                disable_notification=self.disable_notification,
+                                disable_notificatioввn=self.disable_notification,
                                 protect_content=self.protect,
                             )
                         else:
