@@ -12,7 +12,7 @@ from bd_func.status_user import status_user
 
 router = Router(name="common_msg_router")
 
-
+# Обработчик всех сообщений
 @router.message()
 async def handle_all_messages(message: types.Message):
     await base_sql(message)
