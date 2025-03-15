@@ -2,6 +2,8 @@
 # Кастомные логгеры для проекта, с более стандартизированным использованием
 
 from time import sleep
+
+from aiogram import types
 from colorama import Fore
 from loguru import logger
 from aiogram.types import Message
@@ -25,11 +27,11 @@ class Logs:
               log_type: str = "AEP",
               user: str = "@Console") -> None:
         """
-        Логирует сообщение на уровне DEBUG.
+        Логирует сообщение на уровне START.
 
-        :param system:
         :param text: Сообщение для логирования.
-        :param log_type: Тип лога (например, "Logs").
+        :param system: Тип системы логирования.
+        :param log_type: Тип лога (например, "Help").
         :param user: Имя пользователя или источник вызова лога.
 
         :return: Вывод сообщения об старте бота
@@ -46,9 +48,9 @@ class Logs:
         """
         Логирует сообщение на уровне DEBUG.
 
-        :param system:
         :param text: Сообщение для логирования.
-        :param log_type: Тип лога (например, "Logs").
+        :param system: Тип системы логирования.
+        :param log_type: Тип лога (например, "Help").
         :param user: Имя пользователя или источник вызова лога.
         :param message: Сообщение от пользователя, если необходимо извлечь имя.
 
@@ -68,8 +70,8 @@ class Logs:
         """
         Логирует сообщение на уровне INFO.
 
-        :param system:
         :param text: Сообщение для логирования.
+        :param system: Тип системы логирования.
         :param log_type: Тип лога (например, "Logs").
         :param user: Имя пользователя или источник вызова лога.
         :param message: Сообщение от пользователя, если необходимо извлечь имя.
@@ -90,8 +92,8 @@ class Logs:
         """
         Логирует сообщение на уровне WARNING.
 
-        :param system:
         :param text: Сообщение для логирования.
+        :param system: Тип системы логирования.
         :param log_type: Тип лога (например, "Logs").
         :param user: Имя пользователя или источник вызова лога.
         :param message: Сообщение от пользователя, если необходимо извлечь имя.
@@ -112,8 +114,8 @@ class Logs:
         """
         Логирует сообщение на уровне ERROR.
 
-        :param system:
         :param text: Сообщение для логирования.
+        :param system: Тип системы логирования.
         :param log_type: Тип лога (например, "Logs").
         :param user: Имя пользователя или источник вызова лога.
         :param message: Сообщение от пользователя, если необходимо извлечь имя.
@@ -126,37 +128,46 @@ class Logs:
 
 
     @staticmethod
-    def msg(message: Message,
+    def msg(message: types.Message,
             log_type: str = "Message",
+            user: str = None,
+            msg_type: str = None,
             permission: bool = BotLogs.permission) -> None:
         """
         Логирует сообщение, если оно не обработано.
 
-        :param message: Сообщение от пользователя
-        :param log_type: Тип лога (по умолчанию "Message")
-        :param permission: Разрешение на логирование (config)
-
-        :return: Вывод сообщения об обычном сообщении пользователя
+        :param message: Сообщение от пользователя.
+        :param log_type: Тип лога (по умолчанию "Message").
+        :param permission: Разрешение на логирование (config).
+        :param user: Получение пользователя (автоматически).
+        :param msg_type: Получение типа сообщения (автоматически).
+.
+        :return: Вывод сообщения об обычном сообщении пользователя.
         """
+        # Получаем айди чата
+        chat_id = message.chat.id
+
         # Получаем username или id пользователя
-        user: str = f"@{message.from_user.username or message.from_user.id}"
-        msg_type: str = type_msg(message)
+        if user is None:
+            user: str = f"@{message.from_user.username or message.from_user.id}"
+        if msg_type is None:
+            msg_type: str = type_msg(message)
 
         # Логирование только если разрешено
         if permission:
             # Проверка на наличие текста и его типа
             if message.text is None and msg_type not in ("Новые участники чата", "Ушедший участник чата"):
-                Logs.info(log_type=log_type, user=user, text=f"Получено сообщение из ({message.chat.id}) : {msg_type}")
+                Logs.info(log_type=log_type, user=user, text=f"Получено сообщение из ({chat_id}) : {msg_type}")
             elif message.text is not None:
                 Logs.info(log_type=log_type, user=user,
-                          text=f"Получено сообщение из ({message.chat.id}) : {message.text}")
+                          text=f"Получено сообщение из ({chat_id}) : {message.text}")
 
 
     @staticmethod
     def console(stop_time: int = 1,
                 console: bool = Permissions.start_info_console,
                 file: bool = Permissions.start_info_to_file,
-                path: str = ProjectPath.bot_info_log_file,) -> None:
+                path: str = ProjectPath.bot_info_log_file) -> None:
         """
         Собирает информацию о боте и выводит её в консоль, а также возвращает как строку.
 
