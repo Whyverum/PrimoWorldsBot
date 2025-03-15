@@ -75,7 +75,7 @@ def type_msg(message: Message) -> str:
     }
 
     # Получение типа сообщения
-    message_type = message.content_type
+    message_type: str = message.content_type
 
     # Если это контакт, добавляем номер телефона
     if message_type == ContentType.CONTACT and message.contact:
