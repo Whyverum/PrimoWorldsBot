@@ -11,16 +11,23 @@ __all__ = ("create_directories", "setup_directories", "create_directory")
 
 # Функция создания директории
 async def create_directory(directory : str) -> None:
+    """
+    Создает директории, если они еще не существуют.
+
+    :param directory: Путь к базовой директории.
+    :return: Создание директорий по определенному пути.
+    """
     os.makedirs(directory)
 
 
 # Функция создания поддиректорий
 async def create_directories(base_directory: str, subdirectories: List[str]) -> None:
     """
-    Создает указанные поддиректории в указанной базовой директории, если они еще не существуют.
+    Создает указанные поддиректории в указанной базовой директории.
 
     :param base_directory: Путь к базовой директории.
     :param subdirectories: Список поддиректорий, которые необходимо создать.
+    :return: Создание директорий по определенному пути.
     """
     # Создание директорий и файлов в каждой из них
     for subdirectory in subdirectories:
@@ -35,6 +42,8 @@ async def create_directories(base_directory: str, subdirectories: List[str]) -> 
 async def setup_directories() -> None:
     """
     Настройка начальных пустых директорий для проекта.
+
+    :return: Создание системы директорий по определенному пути.
     """
     # Создание директорий для медиа файлов
     await create_directories(ProjectPath.personal_media, TypeDirectory.media_directories)
