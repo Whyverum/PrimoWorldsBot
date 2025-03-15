@@ -1,5 +1,5 @@
 # BotLibrary/system/bots.py
-# Создание и настройка бота в одном файле
+# Создание и настройка бота, диспатчера и основных инструментов
 
 from aiogram import Dispatcher, Bot, F
 from aiogram.client.default import DefaultBotProperties
@@ -8,7 +8,6 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 from ..timer import get_host_time, get_city_time
 from ProjectsFiles import bot_token, BotVar
 
-
 # Создание строителей кнопок
 rkb = ReplyKeyboardBuilder()
 ikb = InlineKeyboardBuilder()
@@ -16,10 +15,11 @@ ikb = InlineKeyboardBuilder()
 # Настройка параметров диспатчера
 dp = Dispatcher()
 dp["started_at"] = get_host_time()
-dp["started_at_msk"] = get_city_time()
+dp["started_at_city"] = get_city_time()
 dp["is_active"] = True  # Флаг активности бота
 dp["logs"] = []
 dp["users"] = {}
+dp["admins"] = {}
 dp["sessions"] = {}
 dp["task_queue"] = []
 dp["configs"] = {"max_connections": 100, "retry_interval": 5, "time_format": BotVar.time_format}
@@ -29,10 +29,11 @@ dp["state"] = {}
 dp["scheduler"] = []
 dp["handlers"] = {"on_message": [], "on_error": []}
 dp["storage"] = {}
-dp["database"] = None
+dp["database"] = "SQLite3"
 
-# Настройки для бота
-bot_properties = DefaultBotProperties(
+
+# Создание экземпляра бота и его настройка
+bot = Bot(token=bot_token, default=DefaultBotProperties(
     parse_mode=BotVar.parse_mode,
     disable_notification=BotVar.disable_notification,
     protect_content=BotVar.protect_content,
@@ -42,14 +43,12 @@ bot_properties = DefaultBotProperties(
     link_preview_prefer_large_media=BotVar.link_preview_prefer_large_media,
     link_preview_show_above_text=BotVar.link_preview_show_above_text,
     show_caption_above_media=BotVar.show_caption_above_media,
-)
-
-# Создание экземпляра бота
-bot = Bot(token=bot_token, default=bot_properties)
+))
 
 # Фильтры для различных типов сообщений
 F_Media = F.photo | F.files | F.video | F.animation | F.voice | F.video_note
 F_All = F.text | F.photo | F.files | F.video | F.animation | F.voice | F.video_note
+
 
 # Класс для хранения данных о боте
 class BotInfo:
@@ -94,12 +93,15 @@ class BotInfo:
         cls.can_join_groups = getattr(bot_info, 'can_join_groups', False)
         cls.can_read_all_group_messages = getattr(bot_info, 'can_read_all_group_messages', False)
 
-async def bot_get_info() -> dict:
+
+# Функция получения информации о боте
+async def bot_get_info(bots: Bot = bot) -> dict:
     """
     Получает информацию о боте и обновляет данные в классе BotInfo.
+    :param bots: Получение объекта бота в функцию.
     :return: Словарь с данными о боте.
     """
-    bot_info_data = await bot.get_me()
+    bot_info_data = await bots.get_me()
     BotInfo.update(bot_info_data)
     return {
         'bot_info': bot_info_data,
