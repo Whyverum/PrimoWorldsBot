@@ -7,7 +7,6 @@ from aiogram.types import Message
 __all__ = ("username", "username_to_text")
 
 
-# Функция получения юзера или ID пользователя
 def username(message: Message) -> str:
     """
     Возвращает юзернейм пользователя из сообщения, или ID, если юзернейм не указан.
@@ -26,7 +25,6 @@ def username(message: Message) -> str:
         raise e  # Перебрасываем ошибку выше для дальнейшей обработки
 
 
-# Функция получение имени пользователя + ссылка на него
 def username_to_text(message: Message) -> str:
     """
     Преобразует информацию о пользователе в строку с HTML-ссылкой.

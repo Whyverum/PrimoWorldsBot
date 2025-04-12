@@ -30,11 +30,11 @@ class BotEdit:
     Класс для хранения данных о боте: имя, описание, разрешения и настройки.
     """
     # Разрешение на ведение логов
-    project_name: str = "Свалка Флуд"
+    project_name: str = "PRIMO"
     permission: bool = Permissions.bot_edit
-    name: str = "Стартовый бот"
-    description: str = "Описание бота"
-    short_description: str = "Описание виджета"
+    name: str = "Первозданная Жемчужина"
+    description: str = "Ваш помощник в удивительные миры! Prod. by:『@verdise』"
+    short_description: str = "Тех.поддержка: @verdise"
 
     is_anonymous: bool = False
     manage_chat: bool = True
@@ -61,7 +61,8 @@ class BotVar:
     encod: str = "utf-8"
     language: str = "Python3-Aiogram"
     time_format: str = "%Y-%m-%d %H:%M:%S"
-    bd_names: str = 'SQLite3/bd.db'
+    bd_names: str = 'ProjectsFiles/database/users.db'
+    bd_path: str = 'ProjectsFiles/database'
     prefix: Tuple[str, ...] = ('$', '!', '.', '%', '&', ':', '|', '+', '-', '/', '~', '?')
 
     parse_mode: str = "HTML"  # Устанавливаем формат HTML для всех сообщений

@@ -11,16 +11,47 @@ from typing import Optional, Callable
 from ..loggers import Logs
 from ..validators import username, valid_url
 from ProjectsFiles import BotVar
-from SQLite3 import base_sql
+from ..sql import db
 
 # Настройки экспорта в модули
 __all__ = ("CommandHandler",)
 
 class CommandHandler:
+    """
+        Класс для создания и управления командами Telegram-бота.
+
+        Этот класс позволяет создавать команды с различными настройками, включая
+        текстовые сообщения, медиафайлы, клавиатуры, выполнение функций и обработку
+        callback-запросов.
+
+        :param name: Название команды.
+        :param keywords: Список ключевых слов, вызывающих команду.
+        :param func: Список функций, которые выполняются при вызове команды.
+        :param text_msg: Текстовое сообщение, которое отправляется в ответ на команду.
+        :param chat_action: Флаг отправки анимации набора текста перед ответом.
+        :param description: Описание команды.
+        :param tg_links: Флаг обработки ссылок на пользователей в тексте.
+        :param keyboard: Клавиатура, привязанная к команде.
+        :param prefix: Префикс команды (по умолчанию `BotVar.prefix`).
+        :param callbackdata: Список callback-данных, связанных с командой.
+        :param only_admin: Флаг, разрешающий использование команды только администраторам.
+        :param ignore_case: Флаг игнорирования регистра в ключевых словах.
+        :param activate_keywords: Флаг активации команды по ключевым словам.
+        :param delete_msg: Флаг удаления исходного сообщения после обработки команды.
+        :param activate_commands: Флаг активации команды через стандартный обработчик команд.
+        :param activate_callback: Флаг активации обработки callback-запросов.
+        :param media: Тип медиафайла, который отправляется (`"message"`, `"photo"`, `"video"`, и т. д.).
+        :param path_to_media: Путь к медиафайлу (или список путей).
+        :param parse_mode: Форматирование текста (`Markdown`, `HTML` и т. д.).
+        :param disable_notification: Флаг отключения уведомлений при отправке сообщений.
+        :param protect: Флаг защиты контента сообщений.
+
+        :return: Готовый шаблон для команды.
+        """
     def __init__(self, name: str,
                  keywords: list,
                  func: Optional[list[Callable]] = None,
-                 text_msg=None,
+                 text_msg = None,
                  chat_action: bool = False,
                  description: str = "Описание команды",
                  tg_links: bool = False,
@@ -34,15 +65,16 @@ class CommandHandler:
                  activate_commands: bool = True,
                  activate_callback: bool = True,
                  media: str = "message",
-                 path_to_media=None,
+                 path_to_media = None,
                  parse_mode: str = BotVar.parse_mode,
                  disable_notification: bool = BotVar.disable_notification,
                  protect: bool = BotVar.protect_content):
+
         self.router = Router(name=f"{name}_router")
         self.name = name
         self.log_type = name.capitalize()
         self.description = description
-        self.last_bot_message = {}  # {chat_id: message_id}
+        self.last_bot_message = {}
 
         self.keywords = keywords
         self.text_msg = text_msg
@@ -125,7 +157,10 @@ class CommandHandler:
                 text = text.replace("<users>", str(message.from_user.id))
 
             Logs.info(log_type=self.log_type, user=username(message), text=f"использовал(а) команду /{self.name}")
-            await base_sql(message)
+
+            # Работа с базами данных
+            db.update_user(message)
+            db.update_user_messages(message)
 
             # Обрабатываем текстовое сообщение
             if callable(self.text_msg):

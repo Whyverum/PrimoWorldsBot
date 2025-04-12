@@ -17,23 +17,14 @@ dp = Dispatcher()
 dp["started_at"] = get_host_time()
 dp["started_at_city"] = get_city_time()
 dp["is_active"] = True  # Флаг активности бота
-dp["logs"] = []
-dp["users"] = {}
-dp["admins"] = {}
-dp["sessions"] = {}
-dp["task_queue"] = []
 dp["configs"] = {"max_connections": 100, "retry_interval": 5, "time_format": BotVar.time_format}
 dp["metrics"] = {"messages_received": 0, "messages_sent": 0, "errors": 0}
-dp["modules"] = {}
-dp["state"] = {}
-dp["scheduler"] = []
 dp["handlers"] = {"on_message": [], "on_error": []}
-dp["storage"] = {}
 dp["database"] = "SQLite3"
 
 
 # Создание экземпляра бота и его настройка
-bot = Bot(token=bot_token, default=DefaultBotProperties(
+bot: Bot = Bot(token=bot_token, default=DefaultBotProperties(
     parse_mode=BotVar.parse_mode,
     disable_notification=BotVar.disable_notification,
     protect_content=BotVar.protect_content,
@@ -57,27 +48,31 @@ class BotInfo:
     """
     id: int = None
     first_name: str = None
-    bot_owner: str = BotVar
     last_name: str = None
     username: str = None
-    description: str = None
-    short_description: str = None
-    can_join_groups: bool = False
-    can_read_all_group_messages: bool = False
+    description: str = ''
+    short_description: str = ''
     language_code: str = BotVar.language
     prefix: str = BotVar.prefix
+    bot_owner: str = BotVar
     is_premium: bool = False
     added_to_attachment_menu: bool = False
     supports_inline_queries: bool = False
     can_connect_to_business: bool = False
     has_main_web_app: bool = False
+    can_join_groups: bool = False
+    can_read_all_group_messages: bool = False
 
     @classmethod
-    def update(cls, bot_info) -> None:
+    async def info(cls, bots: Bot = bot) -> dict:
         """
-        Обновляет данные о боте.
-        :param bot_info: Объект с данными о боте, полученные через API Telegram.
+        Получает информацию о боте через API и обновляет данные в классе.
+
+        :param bots: Объект бота
+        :return: Словарь с данными о боте
         """
+        bot_info = await bots.get_me()
+
         cls.id = bot_info.id
         cls.first_name = bot_info.first_name
         cls.last_name = bot_info.last_name
@@ -93,31 +88,28 @@ class BotInfo:
         cls.can_join_groups = getattr(bot_info, 'can_join_groups', False)
         cls.can_read_all_group_messages = getattr(bot_info, 'can_read_all_group_messages', False)
 
+        return cls.to_dict()
 
-# Функция получения информации о боте
-async def bot_get_info(bots: Bot = bot) -> dict:
-    """
-    Получает информацию о боте и обновляет данные в классе BotInfo.
-    :param bots: Получение объекта бота в функцию.
-    :return: Словарь с данными о боте.
-    """
-    bot_info_data = await bots.get_me()
-    BotInfo.update(bot_info_data)
-    return {
-        'bot_info': bot_info_data,
-        'id': bot_info_data.id,
-        'first_name': bot_info_data.first_name,
-        'last_name': bot_info_data.last_name,
-        'username': bot_info_data.username,
-        'description': getattr(bot_info_data, 'description', ''),
-        'short_description': getattr(bot_info_data, 'short_description', ''),
-        'language_code': bot_info_data.language_code,
-        'prefix': BotVar.prefix,
-        'is_premium': bot_info_data.is_premium,
-        'added_to_attachment_menu': bot_info_data.added_to_attachment_menu,
-        'supports_inline_queries': bot_info_data.supports_inline_queries,
-        'can_connect_to_business': bot_info_data.can_connect_to_business,
-        'has_main_web_app': bot_info_data.has_main_web_app,
-        'can_join_groups': getattr(bot_info_data, 'can_join_groups', False),
-        'can_read_all_group_messages': getattr(bot_info_data, 'can_read_all_group_messages', False),
-    }
+    @classmethod
+    def to_dict(cls) -> dict:
+        """
+        Возвращает текущие данные в виде словаря.
+        """
+        return {
+            'id': cls.id,
+            'first_name': cls.first_name,
+            'last_name': cls.last_name,
+            'username': cls.username,
+            'description': cls.description,
+            'short_description': cls.short_description,
+            'language_code': cls.language_code,
+            'prefix': cls.prefix,
+            'bot_owner': cls.bot_owner,
+            'is_premium': cls.is_premium,
+            'added_to_attachment_menu': cls.added_to_attachment_menu,
+            'supports_inline_queries': cls.supports_inline_queries,
+            'can_connect_to_business': cls.can_connect_to_business,
+            'has_main_web_app': cls.has_main_web_app,
+            'can_join_groups': cls.can_join_groups,
+            'can_read_all_group_messages': cls.can_read_all_group_messages,
+        }

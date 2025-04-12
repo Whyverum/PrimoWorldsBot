@@ -13,8 +13,9 @@ async def normal_words(word: str) -> str:
     """
     try:
         return word.lower().capitalize()
+
     except Exception as e:
         # Импортируем Logs внутри функции, чтобы избежать циклического импорта
-        from ..loggers.custom_loggers import Logs
+        from ..loggers.logs import Logs
         Logs.error(text=f"Ошибка в нормализировании слова: {e}", log_type="NormalWord")
         return word

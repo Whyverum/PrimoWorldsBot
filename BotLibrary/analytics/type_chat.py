@@ -1,25 +1,23 @@
 # BotLibrary/analytics/type_chat.py
 # Определение типа чата
 
-from aiogram import types
+from aiogram.types import Message
 
 # Настройка экспорта в модули
 __all__ = ("type_chat",)
 
-# Проверка на тип чата
-async def type_chat(message: types.Message) -> str:
+async def type_chat(message: Message) -> str:
     """
-    Преобразует информацию о чате в понятные значения.
+    Преобразует информацию о чате в его тип на русском языке.
 
-    :param message: Объект сообщения из aiogram.
+    :param message: Объект сообщения из aiogram, содержащий информацию о чате.
     :return: Тип чата строкой.
     """
-    chat_type: str = message.chat.type
-    if chat_type == "private":
-        return "Личный"
-    elif chat_type == "group" or chat_type == "supergroup":
-        return "Группа"
-    elif chat_type == "channel":
-        return "Канал"
-    else:
-        return "Неизвестный тип чата."
+    chat_types: dict[str, str] = {
+        "private": "Личный",
+        "group": "Группа",
+        "supergroup": "Группа",
+        "channel": "Канал",
+    }
+
+    return chat_types.get(message.chat.type, "Неизвестный тип чата")

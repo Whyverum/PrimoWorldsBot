@@ -6,7 +6,6 @@ from aiogram.types import ContentType, Message
 # Настройка экспорта из модуля
 __all__ = ("type_msg",)
 
-# Функция определения типа сообщения
 def type_msg(message: Message) -> str:
     """
     Функция для определения типа сообщения на основе его содержимого.
@@ -50,7 +49,7 @@ def type_msg(message: Message) -> str:
         ContentType.INVOICE: "Счет",
         ContentType.SUCCESSFUL_PAYMENT: "Успешный платеж",
         ContentType.REFUNDED_PAYMENT: "Возврат платежа",
-        ContentType.USERS_SHARED: "Пользователи поделились",
+        ContentType.USERS_SHARED: "Пользователь поделился",
         ContentType.CHAT_SHARED: "Чат был передан",
         ContentType.CONNECTED_WEBSITE: "Подключенный веб-сайт",
         ContentType.WRITE_ACCESS_ALLOWED: "Разрешение на запись",
@@ -77,9 +76,20 @@ def type_msg(message: Message) -> str:
     # Получение типа сообщения
     message_type: str = message.content_type
 
+
     # Если это контакт, добавляем номер телефона
     if message_type == ContentType.CONTACT and message.contact:
         return f"{content_types.get(message_type, 'Контакт')}: {message.contact.phone_number}"
+
+    # Если это пользователи, добавляем их ID
+    if message_type == ContentType.USERS_SHARED and message.users_shared:
+        user_ids = ", ".join(map(str, message.users_shared.user_ids))
+        return f"{content_types.get(message_type, 'Пользователь поделился')}: {user_ids}"
+
+    # Если это переданный чат, добавляем его ID
+    if message_type == ContentType.CHAT_SHARED and message.chat_shared:
+        return f"{content_types.get(message_type, 'Чат был передан')}: {message.chat_shared.chat_id}"
+
 
     # Возвращаем описание типа сообщения, если оно есть в словаре, иначе "Неизвестный тип"
     return content_types.get(message_type, "Неизвестный тип")

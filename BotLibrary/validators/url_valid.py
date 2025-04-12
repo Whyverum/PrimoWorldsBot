@@ -1,13 +1,9 @@
 # BotLibrary/validators/url_valid.py
 # Валидатор ссылок на регулярных выражениях
 
-import re
-
 # Настройка экспорта из этого модуля
 __all__ = ("valid_url", "url_to_text")
 
-
-# Функция определения является ли строка ссылкой
 def valid_url(url: str) -> bool:
     """
     Проверяет, является ли строка валидной ссылкой (URL).
@@ -15,7 +11,8 @@ def valid_url(url: str) -> bool:
     :param url: Строка для проверки.
     :return: True, если строка является валидным URL, иначе False.
     """
-    url_pattern = re.compile(
+    from re import compile
+    url_pattern = compile(
         r'^(https?://)?'  # Протокол (http или https, необязателен)
         r'([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}'  # Домен
         r'(:\d+)?'  # Порт (необязателен)
@@ -24,7 +21,6 @@ def valid_url(url: str) -> bool:
     return bool(url_pattern.match(url))
 
 
-# Функция, что дает тексту ссылку на HTML
 def url_to_text(text: str, url: str) -> str:
     """
     Преобразует текст в HTML ссылку с указанным URL.
@@ -45,7 +41,7 @@ def url_to_text(text: str, url: str) -> str:
 
     except ValueError as e:
         # Импортируем Logs внутри функции, чтобы избежать циклического импорта
-        from ..loggers.custom_loggers import Logs
+        from ..loggers.logs import Logs
         # Логируем ошибку с использованием Logs.error, как указано
         Logs.error(text=f"Ошибка при создании ссылки: {e}", log_type="InvalidURL")
         raise e  # Перебрасываем ошибку выше для дальнейшей обработки или уведомления

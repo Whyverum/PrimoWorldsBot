@@ -5,6 +5,9 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, KeyboardButtonPol
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from typing import List, Union, Tuple, Optional, Dict, Any
 
+# Настройка экспорта в модули
+__all__ = ("BaseReplyKeyboard",)
+
 class BaseReplyKeyboard:
     def __init__(
             self,

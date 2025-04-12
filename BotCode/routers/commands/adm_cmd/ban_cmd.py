@@ -2,15 +2,14 @@
 # Работа с командой /stats, для получения информации о себе
 
 from aiogram import types
-from BotLibrary import CommandHandler, bot
-from SQLite3 import status_user
+from BotLibrary import CommandHandler, bot, db
 
 # Настройки экспорта в модули
 __all__ = ("ban_cmd",)
 
 # Функция блокировки пользователя
 async def ban_user(message: types.Message, *args, **kwargs) -> None:
-    status = await status_user(message)
+    status = db.get_user_status(message)
     if status not in ('Пользователь', 'Забаннен'):
         # Проверка, что команда вызвана с упоминанием пользователя
         args = message.text.split()

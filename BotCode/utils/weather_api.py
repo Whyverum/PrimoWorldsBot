@@ -1,10 +1,17 @@
 import aiohttp
+from aiogram.types import Message
 from ProjectsFiles import weather_api_key
 
 # Настройки экспорта в модули
 __all__ = ("get_weather",)
 
-async def get_weather(message, *args) -> str:
+async def get_weather(message: Message, *args) -> str:
+    """
+    Обрабатывает запрос о погоде для указанного города и возвращает информацию о текущей погоде.
+
+    :param message: Объект сообщения от пользователя.
+    :return: Возвращает ответ о погоде в указанном городе.
+    """
     # Извлекаем город из сообщения
     command_parts = message.text.split(maxsplit=1)
     print(command_parts[1])
@@ -33,10 +40,10 @@ async def get_weather(message, *args) -> str:
         wind = data["wind"]["speed"]
 
         weather_today: str = (f"Погода <b>{city}</b>\n"
-                     f"☁️Погода: <b>{weather}</b>\n"
-                     f"🌡Температура: <b>{temp}°C</b>\n"
-                     f"💧Влажность: <b>{humidity}%</b>\n"
-                     f"💨Скорость ветра: <b>{wind} м/с</b>")
+                              f"☁️Погода: <b>{weather}</b>\n"
+                              f"🌡Температура: <b>{temp}°C</b>\n"
+                              f"💧Влажность: <b>{humidity}%</b>\n"
+                              f"💨Скорость ветра: <b>{wind} м/с</b>")
         await message.answer(weather_today)
         return weather_today
     except Exception as e:

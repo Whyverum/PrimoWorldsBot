@@ -1,5 +1,5 @@
 # BotCode/routers/commands/user_cmd/start_time_cmd.py
-#
+# Команда на выдачу погоды определенного города
 
 from BotLibrary import CommandHandler
 from BotCode.utils import get_weather

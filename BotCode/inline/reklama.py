@@ -1,8 +1,9 @@
 # BotCode/inline/reklama.py
 # Работа с инлайн запросами на рекламу
 
-from aiogram import Router, types
-from aiogram.types import InlineQueryResultPhoto
+from aiogram import Router
+from aiogram.types import (InlineQueryResultPhoto, InlineQuery, CallbackQuery,
+                           InlineKeyboardMarkup, InlineKeyboardButton)
 from BotLibrary import bot
 
 # Настройка экспорта в модули
@@ -14,13 +15,13 @@ f"""Это сообщение с изображением и инлайн кно
 
 
 @router.callback_query(lambda c: c.data == 'button_1')
-async def process_callback_button(callback_query: types.CallbackQuery) -> None:
+async def process_callback_button(callback_query: CallbackQuery) -> None:
     await bot.answer_callback_query(callback_query.id, text="Вы нажали первую кнопку!")
     await bot.send_message(callback_query.from_user.id, "Ответ на вашу кнопку.")
 
 
 @router.inline_query()
-async def inline_echo(inline_query: types.InlineQuery) -> None:
+async def inline_echo(inline_query: InlineQuery) -> None:
     # Содержимое запроса
     query = inline_query.query
 
@@ -36,10 +37,10 @@ async def inline_echo(inline_query: types.InlineQuery) -> None:
                 photo_url=image_url,  # URL изображения
                 thumbnail_url=image_url,  # Миниатюра изображения
                 caption=text_msg,  # Текст, который будет показываться под изображением
-                reply_markup=types.InlineKeyboardMarkup(
+                reply_markup=InlineKeyboardMarkup(
                     inline_keyboard=[
-                        [types.InlineKeyboardButton(text="Посмотреть инфо-канал", url="https://t.me/adeptusfiziks")],
-                        [types.InlineKeyboardButton(text="Вторая кнопка", callback_data="button_1")],
+                        [InlineKeyboardButton(text="Посмотреть инфо-канал", url="https://t.me/adeptusfiziks")],
+                        [InlineKeyboardButton(text="Вторая кнопка", callback_data="button_1")],
                     ]
                 )
             )
